@@ -1,0 +1,102 @@
+<!-- Sidebar Backdrop (Mobile) -->
+<div data-admin-sidebar-target="backdrop" 
+     class="hidden fixed inset-0 bg-black/50 z-30 lg:hidden transition-opacity duration-300"
+     data-action="click->admin-sidebar#close"></div>
+
+<!-- Sidebar -->
+<aside data-admin-sidebar-target="sidebar"
+       class="fixed top-16 left-0 bottom-0 w-64 bg-white border-r border-slate-200 overflow-hidden z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+  
+  <nav class="flex flex-col h-full">
+    <!-- Main Navigation -->
+    <div class="flex-1 px-4 py-5 overflow-y-auto">
+      
+      <!-- Dashboard Card -->
+      <%= link_to admin_dashboard_path, class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{current_page?(admin_dashboard_path) ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 hover:border-slate-200'}" do %>
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 <%= current_page?(admin_dashboard_path) ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-semibold <%= current_page?(admin_dashboard_path) ? 'text-blue-700' : 'text-slate-700 group-hover:text-blue-700' %> transition-colors duration-200">Dashboard</p>
+          <p class="text-[11px] text-slate-400">Overview & stats</p>
+        </div>
+      <% end %>
+
+      <!-- Analytics Card -->
+      <%= link_to admin_analytics_path, class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{controller_name == 'analytics' ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 hover:border-slate-200'}" do %>
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 <%= controller_name == 'analytics' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-semibold <%= controller_name == 'analytics' ? 'text-blue-700' : 'text-slate-700 group-hover:text-blue-700' %> transition-colors duration-200">Analytics</p>
+          <p class="text-[11px] text-slate-400">Reports & insights</p>
+        </div>
+      <% end %>
+
+      <!-- Divider -->
+      <div class="my-4 border-t border-slate-100"></div>
+      <p class="px-3 mb-3 text-[11px] font-bold uppercase tracking-widest text-slate-400">Catalog</p>
+
+      <!-- Categories Card -->
+      <%= link_to admin_categories_path, class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{controller_name == 'categories' ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 hover:border-slate-200'}" do %>
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 <%= controller_name == 'categories' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-semibold <%= controller_name == 'categories' ? 'text-blue-700' : 'text-slate-700 group-hover:text-blue-700' %> transition-colors duration-200">Categories</p>
+          <p class="text-[11px] text-slate-400">Manage product groups</p>
+        </div>
+      <% end %>
+
+      <!-- Products Card -->
+      <%= link_to admin_skus_path, class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{controller_name == 'skus' ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 hover:border-slate-200'}" do %>
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 <%= controller_name == 'skus' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-semibold <%= controller_name == 'skus' ? 'text-blue-700' : 'text-slate-700 group-hover:text-blue-700' %> transition-colors duration-200">Products</p>
+          <p class="text-[11px] text-slate-400">Inventory & SKUs</p>
+        </div>
+      <% end %>
+
+      <!-- Orders Card -->
+      <%= link_to admin_orders_path, class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{controller_name == 'orders' ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 hover:border-slate-200'}" do %>
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 <%= controller_name == 'orders' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-semibold <%= controller_name == 'orders' ? 'text-blue-700' : 'text-slate-700 group-hover:text-blue-700' %> transition-colors duration-200">Orders</p>
+          <p class="text-[11px] text-slate-400">Sales & Fulfillment</p>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="px-4 py-4 border-t border-slate-100 space-y-1">
+      <%= link_to root_path, class: "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-all duration-150" do %>
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+        </svg>
+        <span>View Site</span>
+      <% end %>
+      
+      <%= button_to destroy_user_session_path, method: :delete, class: "flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all duration-150" do %>
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+        </svg>
+        <span>Sign Out</span>
+      <% end %>
+    </div>
+  </nav>
+</aside>

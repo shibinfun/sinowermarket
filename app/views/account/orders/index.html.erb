@@ -1,0 +1,81 @@
+<div class="flex items-center justify-between mb-8">
+  <h1 class="text-2xl font-bold text-gray-900">My Orders</h1>
+  <%= link_to skus_path, class: "text-blue-600 hover:text-blue-700 font-medium flex items-center" do %>
+    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Back to Shop
+  <% end %>
+</div>
+
+<% if @orders.any? %>
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-gray-50/50 border-b border-gray-200">
+          <tr>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Order Info</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 text-center">Date</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 text-center">Status</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 text-right">Total Price</th>
+            <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <% @orders.each do |order| %>
+            <tr class="hover:bg-gray-50/80 transition-colors">
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-bold text-gray-900">#<%= order.id %></p>
+                    <p class="text-xs text-gray-500"><%= pluralize(order.order_items.count, 'item') %></p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-center">
+                <span class="text-sm text-gray-600 font-medium">
+                  <%= order.created_at.strftime("%b %d, %Y") %>
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                <div class="flex justify-center">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold <%= order.status == 'paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700' %>">
+                    <%= order.status.capitalize %>
+                  </span>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-right">
+                <span class="text-sm font-bold text-gray-900">
+                  <%= number_to_currency(order.total_price) %>
+                </span>
+              </td>
+              <td class="px-6 py-4 text-right">
+                <%= link_to account_order_path(order), class: "inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200" do %>
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% else %>
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 text-center">
+    <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
+      <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+    </div>
+    <h3 class="text-lg font-bold text-gray-900 mb-2">No orders found</h3>
+    <p class="text-gray-500 mb-8 max-w-sm mx-auto">You haven't placed any orders yet. Start shopping and they'll appear here.</p>
+    <%= link_to "Start Shopping", skus_path, class: "inline-flex items-center px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20" %>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+sku_electronics:
+  name: MacBook Pro
+  current_price: 1999.99
+  category: sub_category
+
+sku_clothing:
+  name: T-Shirt
+  current_price: 19.99
+  category: sub_clothing

@@ -1,0 +1,163 @@
+<div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- 面包屑导航 -->
+  <nav class="flex mb-8 text-sm font-medium text-slate-500" aria-label="Breadcrumb">
+    <ol class="flex items-center space-x-2">
+      <li>
+        <%= link_to "Home", root_path, class: "hover:text-blue-600 transition-colors" %>
+      </li>
+      <% if @parent_category %>
+        <li class="flex items-center space-x-2">
+          <svg class="h-5 w-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+          <span class="hover:text-blue-600 cursor-default"><%= @parent_category.name %></span>
+        </li>
+      <% end %>
+      <li class="flex items-center space-x-2">
+        <svg class="h-5 w-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+        <%= link_to @category.name, category_path(@category), class: "hover:text-blue-600 transition-colors" %>
+      </li>
+      <li class="flex items-center space-x-2">
+        <svg class="h-5 w-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-slate-900 font-bold"><%= @sku.name %></span>
+      </li>
+    </ol>
+  </nav>
+
+  <div class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+    <!-- 产品图片展示 (左侧) -->
+    <div class="mb-10 lg:mb-0">
+      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden p-8 flex items-center justify-center aspect-square shadow-sm">
+        <% if @sku.images.attached? %>
+          <%= image_tag @sku.images.first, class: "max-h-full max-w-full object-contain mix-blend-multiply" %>
+        <% else %>
+          <div class="flex flex-col items-center justify-center text-slate-200">
+            <svg class="h-24 w-24 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span class="text-sm font-bold uppercase tracking-widest text-slate-400">No Image Available</span>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- 多图预览 (如果有多张图) -->
+      <% if @sku.images.count > 1 %>
+        <div class="mt-6 grid grid-cols-4 gap-4">
+          <% @sku.images.each do |image| %>
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden p-3 aspect-square flex items-center justify-center hover:border-blue-500 cursor-pointer transition-colors shadow-sm">
+              <%= image_tag image, class: "max-h-full max-w-full object-contain mix-blend-multiply" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- 产品信息 (右侧) -->
+    <div class="flex flex-col">
+      <div class="pb-8 border-b border-slate-100">
+        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-100 mb-4">
+          SKU: <%= @sku.id %>
+        </div>
+        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+          <%= @sku.name %>
+        </h1>
+        <div class="flex items-baseline gap-4 mt-6">
+          <% if @sku.current_price.present? %>
+            <span class="text-4xl font-black text-blue-600">
+              <%= number_to_currency(@sku.current_price) %>
+            </span>
+            <% if @sku.original_price.present? && @sku.original_price > @sku.current_price %>
+              <span class="text-xl text-slate-400 line-through">
+                <%= number_to_currency(@sku.original_price) %>
+              </span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-green-100 text-green-800">
+                SAVE <%= number_to_currency(@sku.original_price - @sku.current_price) %>
+              </span>
+            <% end %>
+          <% else %>
+            <span class="text-2xl font-bold text-slate-700">Contact for Pricing</span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="py-8 space-y-8">
+        <!-- 描述 -->
+        <% if @sku.description.present? %>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center">
+              <span class="w-1 h-5 bg-blue-600 rounded-full mr-2"></span>
+              Product Description
+            </h3>
+            <div class="text-slate-600 leading-relaxed prose prose-slate max-w-none">
+              <%= simple_format @sku.description %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- 下载 PDF -->
+        <% if @sku.specsheet.attached? %>
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-red-600 mr-4">
+                  <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900">Technical Datasheet</h4>
+                  <p class="text-sm text-slate-500">PDF Specification Document</p>
+                </div>
+              </div>
+              <%= link_to url_for(@sku.specsheet), target: "_blank", class: "inline-flex items-center px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-sm" do %>
+                Download PDF
+                <svg class="ml-2 h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Add to Cart / Contact Buttons -->
+        <div class="pt-4 flex flex-col sm:flex-row gap-4">
+          <% if @sku.current_price.present? %>
+            <%= button_to cart_items_path(sku_id: @sku.id), class: "flex-1 inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200 active:scale-95" do %>
+              Add to Cart
+              <svg class="ml-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            <% end %>
+          <% else %>
+            <button class="flex-1 inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200 active:scale-95">
+              Request Quote
+            </button>
+          <% end %>
+          <button class="flex-1 inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-white border-2 border-slate-200 text-slate-700 font-bold text-lg hover:bg-slate-50 transition-all active:scale-95">
+            Contact Sales
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部选项卡: 技术数据 -->
+  <% if @sku.technical_data.present? %>
+    <div class="mt-20">
+      <div class="border-b border-slate-200 mb-8">
+        <h2 class="text-2xl font-bold text-slate-900 pb-4 inline-block border-b-4 border-blue-600">
+          Technical Specifications
+        </h2>
+      </div>
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-8 md:p-12 text-slate-600 prose prose-blue prose-lg max-w-none">
+          <%= simple_format @sku.technical_data %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

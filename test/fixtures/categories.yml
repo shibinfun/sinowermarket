@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+root_category:
+  name: Electronics
+  parent: nil
+  position: 1
+
+sub_category:
+  name: Laptops
+  parent: root_category
+  position: 1
+
+root_clothing:
+  name: Clothing
+  parent: nil
+  position: 2
+
+sub_clothing:
+  name: T-Shirts
+  parent: root_clothing
+  position: 1

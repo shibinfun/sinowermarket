@@ -1,0 +1,89 @@
+<%= form_with(model: [:admin, sku], class: "space-y-6") do |f| %>
+  <% if sku.errors.any? %>
+    <div class="p-5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+      <div class="flex items-start">
+        <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+          <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-red-800 mb-2"><%= pluralize(sku.errors.count, "error") %> prohibited this SKU from being saved:</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <% sku.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="col-span-2">
+      <%= f.label :name, class: "block text-sm font-semibold text-slate-700 mb-2" %>
+      <%= f.text_field :name, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Product name" %>
+    </div>
+
+    <div class="col-span-2 md:col-span-1">
+      <%= f.label :category_id, "Category (Sub-category only)", class: "block text-sm font-semibold text-slate-700 mb-2" %>
+      <%= f.collection_select :category_id, Category.where.not(parent_id: nil).ordered, :id, :name, { prompt: "Select a sub-category" }, { class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors" } %>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 col-span-2 md:col-span-1">
+      <div>
+        <%= f.label :original_price, class: "block text-sm font-semibold text-slate-700 mb-2" %>
+        <%= f.number_field :original_price, step: 0.01, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Original" %>
+      </div>
+      <div>
+        <%= f.label :current_price, class: "block text-sm font-semibold text-slate-700 mb-2" %>
+        <%= f.number_field :current_price, step: 0.01, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Sale price" %>
+      </div>
+    </div>
+
+    <div class="col-span-2">
+      <%= f.label :description, class: "block text-sm font-semibold text-slate-700 mb-2" %>
+      <%= f.text_area :description, rows: 4, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Product description..." %>
+    </div>
+
+    <div class="col-span-2">
+      <%= f.label :technical_data, class: "block text-sm font-semibold text-slate-700 mb-2" %>
+      <%= f.text_area :technical_data, rows: 4, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Technical specifications..." %>
+    </div>
+
+    <div class="col-span-2">
+      <%= f.label :images, "Product Images", class: "block text-sm font-semibold text-slate-700 mb-2" %>
+      <%= f.file_field :images, multiple: true, class: "w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors" %>
+      <% if sku.images.attached? %>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <% sku.images.each do |image| %>
+            <div class="relative w-20 h-20 group">
+              <%= image_tag image.variant(resize_to_limit: [100, 100]), class: "w-full h-full object-cover rounded-xl border border-slate-200 shadow-sm" %>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
+                <span class="text-[10px] text-white font-medium">Current</span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-span-2">
+      <%= f.label :specsheet, "Specsheet (PDF)", class: "block text-sm font-semibold text-slate-700 mb-2" %>
+      <%= f.file_field :specsheet, accept: "application/pdf", class: "w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors" %>
+      <% if sku.specsheet.attached? %>
+        <div class="mt-3 inline-flex items-center px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl">
+          <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+          </svg>
+          <%= link_to sku.specsheet.filename, url_for(sku.specsheet), target: "_blank", class: "text-sm text-blue-600 hover:underline font-medium" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex justify-end space-x-3 pt-6 border-t border-slate-100">
+    <%= link_to "Cancel", admin_skus_path, class: "px-5 py-2.5 border border-slate-300 text-sm font-medium rounded-xl text-slate-700 bg-white hover:bg-slate-50 transition-colors" %>
+    <%= f.submit class: "px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white cursor-pointer transition-all duration-200" %>
+  </div>
+<% end %>

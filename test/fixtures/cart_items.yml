@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cart: one
+  sku: sku_electronics
+  quantity: 1
+
+two:
+  cart: two
+  sku: sku_clothing
+  quantity: 1

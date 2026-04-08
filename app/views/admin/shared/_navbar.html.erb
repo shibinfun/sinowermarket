@@ -1,0 +1,76 @@
+<nav class="fixed top-0 left-0 right-0 z-40 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 h-16 shadow-lg shadow-slate-900/20">
+  <div class="flex items-center justify-between h-16 px-4 lg:px-6">
+    <!-- Left: Logo + Sidebar Toggle -->
+    <div class="flex items-center space-x-4">
+      <button type="button" 
+              data-action="click->admin-sidebar#toggle"
+              class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-200">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+      
+      <%= link_to admin_dashboard_path, class: "flex items-center space-x-3 group" do %>
+        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-shadow duration-200">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
+          </svg>
+        </div>
+        <span class="text-white font-bold text-lg tracking-tight hidden sm:block group-hover:text-blue-300 transition-colors duration-200">Admin Panel</span>
+      <% end %>
+    </div>
+
+    <!-- Right: User Menu -->
+    <div class="flex items-center space-x-3">
+      <!-- Notifications -->
+      <button type="button" class="relative p-2 text-slate-400 hover:text-white hover:bg-slate-700/50 rounded-xl transition-all duration-200 group">
+        <svg class="h-5 w-5 group-hover:scale-110 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+        </svg>
+        <span class="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full ring-2 ring-slate-800 animate-pulse"></span>
+      </button>
+
+      <!-- Divider -->
+      <div class="hidden md:block w-px h-8 bg-slate-700/50"></div>
+
+      <!-- User Dropdown -->
+      <div class="relative" data-controller="dropdown">
+        <button type="button" 
+                data-action="click->dropdown#toggle"
+                class="flex items-center space-x-2.5 p-1.5 pr-3 rounded-xl hover:bg-slate-700/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200 group">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-shadow duration-200">
+            <%= current_user.email.first(2).upcase %>
+          </div>
+          <span class="hidden md:block text-slate-300 text-sm font-medium group-hover:text-white transition-colors duration-200"><%= current_user.email.split('@').first %></span>
+          <svg class="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-300 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+
+        <div data-dropdown-target="menu" class="hidden absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-2xl border border-slate-100 py-1.5 z-50 overflow-hidden">
+          <!-- User Info Header -->
+          <div class="px-4 py-3 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
+            <p class="text-sm font-semibold text-slate-800"><%= current_user.email.split('@').first %></p>
+            <p class="text-xs text-slate-500 mt-0.5"><%= current_user.email %></p>
+          </div>
+          
+          <%= link_to root_path, class: "flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-150" do %>
+            <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            View Site
+          <% end %>
+          
+          <div class="my-1.5 mx-3 border-t border-slate-100"></div>
+          
+          <%= button_to destroy_user_session_path, method: :delete, class: "flex items-center w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150" do %>
+            <svg class="w-4 h-4 mr-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+            Sign Out
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
