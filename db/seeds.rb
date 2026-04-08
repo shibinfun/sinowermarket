@@ -13,8 +13,16 @@ puts "🌱 Seeding database with test data..."
 
 # Clean existing data
 puts "Cleaning existing data..."
-Sku.destroy_all
-Category.destroy_all
+# Disable foreign key checks for SQLite to avoid constraint issues
+if ActiveRecord::Base.connection.adapter_name == 'SQLite'
+  ActiveRecord::Base.connection.execute('PRAGMA foreign_keys = OFF')
+end
+Sku.delete_all
+Category.delete_all
+User.delete_all if defined?(User) && User.table_exists?
+if ActiveRecord::Base.connection.adapter_name == 'SQLite'
+  ActiveRecord::Base.connection.execute('PRAGMA foreign_keys = ON')
+end
 
 # Define 18 primary categories with their subcategories and SKUs
 categories_data = [
@@ -402,3 +410,19 @@ puts "   Primary categories: 18"
 puts "   Total categories: #{Category.count}"
 puts "   Total SKUs: #{total_skus}"
 puts "   Total products in DB: #{Sku.count}"
+
+# Create admin user
+puts "\nCreating admin user..."
+admin_user = User.find_or_initialize_by(email: 'admin@gmail.com')
+if admin_user.new_record?
+  admin_user.password = 'password'
+  admin_user.password_confirmation = 'password'
+  admin_user.admin = true
+  if admin_user.save
+    puts "✓ Admin user created: #{admin_user.email} (Password: password)"
+  else
+    puts "✗ Failed to create admin user: #{admin_user.errors.full_messages.join(', ')}"
+  end
+else
+  puts "ℹ Admin user already exists: #{admin_user.email}"
+end
