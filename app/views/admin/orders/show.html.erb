@@ -99,7 +99,7 @@
         </div>
         <div>
           <label class="text-gray-400 text-xs uppercase font-bold tracking-wider">Customer Email</label>
-          <div class="mt-1 text-gray-800"><%= @order.user.email %></div>
+          <div class="mt-1 text-gray-800"><%= @order.user&.email || "Deleted User" %></div>
         </div>
       </div>
     </div>

@@ -25,7 +25,6 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#index", as: :root
     get "dashboard", to: "dashboard#index", as: :dashboard
-    get "analytics", to: "analytics#index", as: :analytics
     resources :categories
     resources :skus
     resources :orders, only: [:index, :show] do
