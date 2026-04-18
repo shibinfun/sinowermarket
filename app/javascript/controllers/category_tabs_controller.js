@@ -4,20 +4,33 @@ export default class extends Controller {
   static targets = ["tab", "content"]
 
   connect() {
-    // 不再默认展示，因为放在了导航栏，初始应该是关闭的
+    this.showTimeout = null
+    this.hideTimeout = null
+  }
+
+  disconnect() {
+    if (this.showTimeout) clearTimeout(this.showTimeout)
+    if (this.hideTimeout) clearTimeout(this.hideTimeout)
   }
 
   toggle(event) {
     const categoryId = event.currentTarget.dataset.id
-    this.show(categoryId)
+    
+    if (this.showTimeout) clearTimeout(this.showTimeout)
+    if (this.hideTimeout) clearTimeout(this.hideTimeout)
+
+    // 150ms 延迟，防止快速滑过时频繁切换
+    this.showTimeout = setTimeout(() => {
+      this.show(categoryId)
+    }, 150)
   }
 
   show(categoryId) {
     this.tabTargets.forEach(tab => {
       if (tab.dataset.id === categoryId) {
-        tab.classList.add("bg-[#F7F7F7]", "text-blue-600")
+        tab.classList.add("bg-gray-100", "text-blue-600")
       } else {
-        tab.classList.remove("bg-[#F7F7F7]", "text-blue-600")
+        tab.classList.remove("bg-gray-100", "text-blue-600")
       }
     })
 
@@ -31,12 +44,18 @@ export default class extends Controller {
   }
 
   hideAll() {
-    this.tabTargets.forEach(tab => {
-      tab.classList.remove("bg-[#F7F7F7]", "text-blue-600")
-    })
+    if (this.showTimeout) clearTimeout(this.showTimeout)
+    if (this.hideTimeout) clearTimeout(this.hideTimeout)
+    
+    // 250ms 缓冲区，允许鼠标斜向移动时短暂离开区域
+    this.hideTimeout = setTimeout(() => {
+      this.tabTargets.forEach(tab => {
+        tab.classList.remove("bg-gray-100", "text-blue-600")
+      })
 
-    this.contentTargets.forEach(content => {
-      content.classList.add("hidden")
-    })
+      this.contentTargets.forEach(content => {
+        content.classList.add("hidden")
+      })
+    }, 250)
   }
 }
