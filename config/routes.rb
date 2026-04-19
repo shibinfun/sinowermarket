@@ -26,12 +26,22 @@ Rails.application.routes.draw do
     root "dashboard#index", as: :root
     get "dashboard", to: "dashboard#index", as: :dashboard
     resources :categories
-    resources :skus
+    resources :skus do
+      member do
+        delete :delete_image
+      end
+    end
     resources :orders, only: [:index, :show] do
       member do
         post :ship
         post :complete
         post :cancel
+      end
+    end
+    resources :visitors, only: [:index] do
+      collection do
+        delete :destroy_all
+        delete :clean_old
       end
     end
   end

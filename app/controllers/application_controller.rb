@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
   before_action :set_navbar_categories
+  before_action :track_visitor
   helper_method :current_cart
 
   def current_cart
@@ -21,6 +22,24 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def track_visitor
+    # 忽略后台请求和资源文件请求
+    return if request.path.start_with?('/admin', '/assets', '/rails')
+    
+    # 记录访问
+    Visitor.create(
+      ip: request.remote_ip,
+      path: request.fullpath,
+      user_agent: request.user_agent,
+      location: "Local/Unknown" # 暂时填入未知，后续可以考虑集成地理位置API
+    )
+
+    # 随机触发清理旧数据 (1% 的概率)
+    if rand < 0.01
+      Visitor.where('created_at < ?', 7.days.ago).delete_all
+    end
+  end
 
   def set_navbar_categories
     @categories = Category.roots.includes(:children).ordered

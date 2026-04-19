@@ -399,6 +399,20 @@ categories_data.each_with_index do |cat_data, index|
         s.current_price = sku_data[:price]
         s.description = "#{sku_data[:name]} - Professional grade commercial kitchen equipment."
       end
+j
+      # Add placeholder image if none attached
+      if !sku.images.attached?
+        begin
+          sku.images.attach(
+            io: File.open(Rails.root.join('test/fixtures/files/product_placeholder.png')),
+            filename: 'product_placeholder.png',
+            content_type: 'image/png'
+          )
+        rescue => e
+          puts "      ⚠️ Could not attach image to #{sku.name}: #{e.message}"
+        end
+      end
+
       total_skus += 1
     end
   end

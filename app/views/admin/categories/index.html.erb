@@ -35,15 +35,7 @@
             <div class="px-6 py-5 flex items-center justify-between bg-gradient-to-r from-white to-slate-50/50 hover:from-blue-50/50 hover:to-blue-50/30 transition-all duration-200">
               <div class="flex items-center">
                 <div class="relative">
-                  <% if category.image.attached? %>
-                    <%= image_tag category.image, class: "h-12 w-12 rounded-xl object-cover border-2 border-white shadow-sm" %>
-                  <% else %>
-                    <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center border-2 border-white shadow-sm">
-                      <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                      </svg>
-                    </div>
-                  <% end %>
+                  <%= display_image(category.image, class: "h-12 w-12 rounded-xl object-cover border-2 border-white shadow-sm") %>
                   <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-[9px] text-white font-bold shadow-sm">1</span>
                 </div>
                 <div class="ml-4">
@@ -80,15 +72,7 @@
                   <div class="px-6 py-3 pl-20 flex items-center justify-between group/child hover:bg-white transition-colors duration-150">
                     <div class="flex items-center">
                       <div class="relative">
-                        <% if child.image.attached? %>
-                          <%= image_tag child.image, class: "h-9 w-9 rounded-lg object-cover border border-white shadow-sm" %>
-                        <% else %>
-                          <div class="h-9 w-9 rounded-lg bg-slate-200 flex items-center justify-center border border-white shadow-sm">
-                            <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z" />
-                            </svg>
-                          </div>
-                        <% end %>
+                        <%= display_image(child.image, class: "h-9 w-9 rounded-lg object-cover border border-white shadow-sm") %>
                         <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-[8px] text-white font-bold shadow-sm">2</span>
                       </div>
                       <div class="ml-3">

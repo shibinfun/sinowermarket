@@ -45,7 +45,9 @@ module Admin
       end
 
       def category_params
-        params.require(:category).permit(:name, :parent_id, :position, :image)
+        params.require(:category).permit(:name, :parent_id, :position, :image).tap do |p|
+          p.delete(:image) if p[:image].blank?
+        end
       end
   end
 end

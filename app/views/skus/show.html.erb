@@ -30,30 +30,46 @@
 
   <div class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
     <!-- 产品图片展示 (左侧) -->
-    <div class="mb-10 lg:mb-0">
-      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden p-8 flex items-center justify-center aspect-square shadow-sm">
-        <% if @sku.images.attached? %>
-          <%= image_tag @sku.images.first, class: "max-h-full max-w-full object-contain mix-blend-multiply" %>
-        <% else %>
-          <div class="flex flex-col items-center justify-center text-slate-200">
-            <svg class="h-24 w-24 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <span class="text-sm font-bold uppercase tracking-widest text-slate-400">No Image Available</span>
-          </div>
-        <% end %>
-      </div>
-
-      <!-- 多图预览 (如果有多张图) -->
-      <% if @sku.images.count > 1 %>
-        <div class="mt-6 grid grid-cols-4 gap-4">
-          <% @sku.images.each do |image| %>
-            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden p-3 aspect-square flex items-center justify-center hover:border-blue-500 cursor-pointer transition-colors shadow-sm">
-              <%= image_tag image, class: "max-h-full max-w-full object-contain mix-blend-multiply" %>
-            </div>
+      <div class="mb-10 lg:mb-0 flex flex-row gap-6 overflow-hidden" data-controller="sku-images" data-sku-images-current-index-value="0">
+        <!-- 多图预览 (如果有多张图) -->
+        <% if @sku.images.count > 1 %>
+          <div class="flex flex-col gap-4 overflow-y-auto overflow-x-hidden max-h-[400px] md:max-h-[600px] scrollbar-hide w-16 md:w-24 shrink-0 pb-2 pr-1">
+          <% @sku.ordered_images.each_with_index do |image, index| %>
+            <button class="bg-white rounded-xl border-2 <%= index == 0 ? 'border-blue-600 shadow-blue-100' : 'border-slate-200' %> overflow-hidden p-2 w-16 h-16 md:w-24 md:h-24 shrink-0 flex items-center justify-center hover:border-blue-500 cursor-pointer transition-all shadow-sm focus:outline-none"
+                    data-action="click->sku-images#switch"
+                    data-sku-images-target="thumbnail"
+                    data-index="<%= index %>"
+                    data-full-url="<%= url_for(image) %>">
+              <%= image_tag image.variant(resize_to_limit: [150, 150]), class: "max-h-full max-w-full object-contain mix-blend-multiply" %>
+            </button>
           <% end %>
         </div>
       <% end %>
+
+      <div class="flex-1 bg-white rounded-3xl border border-slate-200 overflow-hidden p-8 flex items-center justify-center aspect-square shadow-sm relative group">
+        <%= display_image(@sku.ordered_images.first, 
+                      class: "max-h-full max-w-full object-contain mix-blend-multiply transition-all duration-300", 
+                      id: "main-product-image",
+                      data: { sku_images_target: "mainImage" }) %>
+
+        <% if @sku.images.count > 1 %>
+          <!-- Left Arrow -->
+          <button data-action="click->sku-images#previous" 
+                  class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-white hover:text-blue-600 transition-all shadow-md opacity-0 group-hover:opacity-100 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+          
+          <!-- Right Arrow -->
+          <button data-action="click->sku-images#next" 
+                  class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-white hover:text-blue-600 transition-all shadow-md opacity-0 group-hover:opacity-100 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        <% end %>
+      </div>
     </div>
 
     <!-- 产品信息 (右侧) -->
@@ -85,19 +101,6 @@
       </div>
 
       <div class="py-8 space-y-8">
-        <!-- 描述 -->
-        <% if @sku.description.present? %>
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center">
-              <span class="w-1 h-5 bg-blue-600 rounded-full mr-2"></span>
-              Product Description
-            </h3>
-            <div class="text-slate-600 leading-relaxed prose prose-slate max-w-none">
-              <%= simple_format @sku.description %>
-            </div>
-          </div>
-        <% end %>
-
         <!-- 下载 PDF -->
         <% if @sku.specsheet.attached? %>
           <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
@@ -145,19 +148,110 @@
     </div>
   </div>
 
-  <!-- 底部选项卡: 技术数据 -->
-  <% if @sku.technical_data.present? %>
-    <div class="mt-20">
-      <div class="border-b border-slate-200 mb-8">
-        <h2 class="text-2xl font-bold text-slate-900 pb-4 inline-block border-b-4 border-blue-600">
-          Technical Specifications
+  <!-- 详细信息: 产品描述、技术规范与您的可靠伙伴 -->
+  <div class="mt-20 grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+    <!-- 产品描述 (第一栏) -->
+    <div class="flex flex-col <%= @sku.description.blank? ? 'hidden' : '' %>">
+      <div class="border-b border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-900 pb-3 inline-block border-b-4 border-blue-600">
+          Product Description
         </h2>
       </div>
-      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="p-8 md:p-12 text-slate-600 prose prose-blue prose-lg max-w-none">
-          <%= simple_format @sku.technical_data %>
+      <div class="flex-1 bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-6 md:p-8 text-slate-600 prose prose-slate max-w-none">
+          <%= @sku.description %>
         </div>
       </div>
     </div>
-  <% end %>
+
+    <!-- 技术数据 (第二栏) -->
+    <div class="flex flex-col <%= @sku.technical_data.blank? ? 'hidden' : '' %>">
+      <div class="border-b border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-900 pb-3 inline-block border-b-4 border-blue-600">
+          Technical Specifications
+        </h2>
+      </div>
+      <div class="flex-1 bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-6 md:p-8 text-slate-600 prose prose-blue max-w-none">
+          <%= @sku.technical_data %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 优势与伙伴信息 (第三栏) -->
+    <div class="flex flex-col">
+      <div class="border-b border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-900 pb-3 inline-block border-b-4 border-blue-600">
+          Your Reliable Partner
+        </h2>
+      </div>
+      <div class="flex-1 flex flex-col space-y-4">
+        <!-- 评分/认证卡片 -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-6">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-600 text-sm font-medium">Price/performance:</span>
+              <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs font-bold rounded">Very good</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-600 text-sm font-medium">Customer satisfaction:</span>
+              <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs font-bold rounded">Very good</span>
+            </div>
+            <div class="pt-3 border-t border-slate-100">
+              <h4 class="font-bold text-slate-900 text-sm mb-1">Sinower Market Excellence Award</h4>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                Sinower Market was awarded top marks for price/performance and customer satisfaction.
+              </p>
+              <div class="mt-3 flex items-center gap-2">
+                <div class="px-2 py-0.5 bg-slate-100 rounded font-black text-blue-600 text-xs tracking-tighter">SINOWER</div>
+                <div class="px-2 py-0.5 bg-slate-100 rounded font-black text-blue-600 text-xs tracking-tighter">QUALITY</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 您的优势 -->
+        <div class="flex-1 bg-blue-600 rounded-3xl shadow-md overflow-hidden p-6 text-white">
+          <h3 class="text-lg font-bold mb-4">Your Advantages</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <svg class="h-5 w-5 text-blue-200 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-xs font-medium">35,000+ products in stock</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="h-5 w-5 text-blue-200 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-xs font-medium">Free delivery across Europe</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="h-5 w-5 text-blue-200 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-xs font-medium">Price Match Promise</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="h-5 w-5 text-blue-200 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-xs font-medium">20+ years experience</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 缺失信息反馈 -->
+        <div class="bg-slate-900 rounded-3xl shadow-sm overflow-hidden p-6 text-white">
+          <h4 class="font-bold text-sm mb-1">Missing information?</h4>
+          <%= link_to "#", class: "inline-flex items-center text-blue-400 text-sm font-bold hover:text-blue-300 transition-colors" do %>
+            Contact us directly Here 
+            <svg class="ml-1 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

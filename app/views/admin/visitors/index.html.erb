@@ -1,0 +1,95 @@
+<% content_for :title, "Visitors - Admin" %>
+
+<div class="space-y-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.833-6.247 4.125 4.125 0 00-3.833 6.247zM3.75 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.833-6.247 4.125 4.125 0 00-3.833 6.247zM9 6.75a3 3 0 116 0 3 3 0 01-6 0z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Visitors</h1>
+          <p class="text-sm text-slate-500 mt-0.5">Track and manage site traffic</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <%= button_to clean_old_admin_visitors_path, method: :delete, data: { confirm: "Clear all data older than 7 days?" }, class: "inline-flex items-center px-4 py-2.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-semibold rounded-xl shadow-sm transition-all duration-200" do %>
+        <svg class="w-4 h-4 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+        Clean > 7 Days
+      <% end %>
+
+      <%= button_to destroy_all_admin_visitors_path, method: :delete, data: { confirm: "Are you sure you want to clear ALL visitor data?" }, class: "inline-flex items-center px-4 py-2.5 bg-red-50 text-red-700 hover:bg-red-100 text-sm font-semibold rounded-xl transition-all duration-200" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+        Clear All
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Visitors Table -->
+  <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+    <% if @visitors.any? %>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200">
+          <thead class="bg-gradient-to-r from-slate-50 to-slate-50/50">
+            <tr>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Time</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">IP Address</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Location</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Path</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">User Agent</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <% @visitors.each do |visitor| %>
+              <tr class="hover:bg-slate-50/70 transition-colors duration-150 group">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                  <%= visitor.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    <%= visitor.ip %>
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                  <%= visitor.location %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                  <%= visitor.path %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-400 max-w-xs truncate" title="<%= visitor.user_agent %>">
+                  <%= visitor.user_agent %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Pagination -->
+      <% if @visitors.total_pages > 1 %>
+        <div class="px-6 py-4 bg-slate-50 border-t border-slate-200">
+          <%= paginate @visitors %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="py-16 text-center">
+        <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.833-6.247 4.125 4.125 0 00-3.833 6.247zM3.75 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.833-6.247 4.125 4.125 0 00-3.833 6.247zM9 6.75a3 3 0 116 0 3 3 0 01-6 0z" />
+          </svg>
+        </div>
+        <p class="text-slate-500 font-medium">No visitor data yet</p>
+        <p class="text-sm text-slate-400 mt-1">Data will appear here once people visit the site</p>
+      </div>
+    <% end %>
+  </div>
+</div>

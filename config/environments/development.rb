@@ -34,6 +34,10 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  # Set host for active storage
+  config.active_storage.draw_routes = true
+  config.active_storage.resolve_model_to_route = :rails_storage_proxy
+
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
 

@@ -1,8 +1,15 @@
 class Sku < ApplicationRecord
   belongs_to :category
 
-  has_many_attached :images
+  has_many_attached :images, dependent: :destroy
+
+  def ordered_images
+    images.order(:position, :created_at)
+  end
   has_one_attached :specsheet
+
+  has_rich_text :description
+  has_rich_text :technical_data
 
   validates :name, presence: true
   validates :category_id, presence: true

@@ -1,6 +1,6 @@
 class SkusController < ApplicationController
   def index
-    @skus = Sku.with_attached_images.all
+    @skus = Sku.includes(:category, images_attachments: :blob).all
     if params[:query].present?
       @skus = @skus.where("name LIKE ?", "%#{params[:query]}%")
     end
@@ -15,6 +15,7 @@ class SkusController < ApplicationController
     end
 
     apply_sorting
+    @skus = @skus.page(params[:page]).per(12)
   end
 
   def show
