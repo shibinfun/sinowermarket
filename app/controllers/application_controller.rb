@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
+  before_action :set_locale
+  before_action :set_currency
   before_action :set_navbar_categories
   before_action :track_visitor
   helper_method :current_cart
@@ -43,5 +45,15 @@ class ApplicationController < ActionController::Base
 
   def set_navbar_categories
     @categories = Category.roots.includes(:children).ordered
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
+    session[:locale] = I18n.locale
+  end
+
+  def set_currency
+    @currency = params[:currency] || session[:currency] || "USD"
+    session[:currency] = @currency
   end
 end

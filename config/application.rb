@@ -11,6 +11,9 @@ module SinowerMarket
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    config.i18n.available_locales = [:en, :es, :fr]
+    config.i18n.default_locale = :en
+
     # Ensure Active Storage keeps existing attachments when assigning new ones
     config.active_storage.replace_on_assign_to_many = false
 
