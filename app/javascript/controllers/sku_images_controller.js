@@ -26,25 +26,35 @@ export default class extends Controller {
   }
 
   updateGallery(fullUrl) {
-    // Update main image with a simple fade effect
-    this.mainImageTarget.style.opacity = "0"
-    
-    setTimeout(() => {
+    if (!this.hasMainImageTarget) return
+
+    // 如果地址没变，不执行更新
+    if (this.mainImageTarget.src === fullUrl) return
+
+    // 使用 CSS 过渡而非 setTimeout 延迟，减少闪烁
+    // 预加载图片以平滑切换
+    const tempImage = new Image()
+    tempImage.onload = () => {
       this.mainImageTarget.src = fullUrl
       this.mainImageTarget.style.opacity = "1"
-    }, 200)
+    }
+    
+    this.mainImageTarget.style.opacity = "0.7" // 稍微降低透明度，保持可见性
+    tempImage.src = fullUrl
 
-    // Update thumbnail styles
-    this.thumbnailTargets.forEach((thumb, i) => {
-      if (i === this.currentIndexValue) {
-        thumb.classList.add("border-blue-600", "shadow-blue-100")
-        thumb.classList.remove("border-slate-200")
-        // Scroll into view if needed
-        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
-      } else {
-        thumb.classList.remove("border-blue-600", "shadow-blue-100")
-        thumb.classList.add("border-slate-200")
-      }
-    })
+    // 更新缩略图样式 (如果存在)
+    if (this.hasThumbnailTarget) {
+      this.thumbnailTargets.forEach((thumb, i) => {
+        if (i === this.currentIndexValue) {
+          thumb.classList.add("border-blue-600", "shadow-blue-100")
+          thumb.classList.remove("border-slate-200")
+          // Scroll into view if needed
+          thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
+        } else {
+          thumb.classList.remove("border-blue-600", "shadow-blue-100")
+          thumb.classList.add("border-slate-200")
+        }
+      })
+    }
   }
 }
