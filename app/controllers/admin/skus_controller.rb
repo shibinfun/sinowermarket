@@ -14,7 +14,7 @@ module Admin
           @skus = @skus.where(category_id: params[:category_id])
         end
       end
-      @skus = @skus.page(params[:page]).per(15)
+      @skus = @skus.page(params[:page]).per(20)
     end
 
     def show

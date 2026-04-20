@@ -1,5 +1,5 @@
 <!-- Main Navbar - Light Theme -->
-<nav class="fixed top-0 left-0 right-0 z-30 bg-white shadow-sm border-b border-gray-100" data-controller="mobile-menu">
+<nav class="fixed top-0 left-0 w-full z-30 bg-white shadow-sm border-b border-gray-100" data-controller="mobile-menu">
   <!-- Utility Bar -->
   <div class="border-b border-gray-100 bg-gray-50">
     <div class="max-w-screen-2xl mx-auto px-4 lg:px-8">
@@ -326,9 +326,9 @@
       </div>
     </div>
   </div>
-
-  <!-- Category Banner -->
-  <% if controller_name == "skus" %>
-    <%= render "home/category_banner" %>
-  <% end %>
 </nav>
+
+<!-- Category Banner -->
+<% if controller_name == "skus" %>
+  <%= render "home/category_banner" %>
+<% end %>

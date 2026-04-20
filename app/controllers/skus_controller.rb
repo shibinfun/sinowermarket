@@ -15,7 +15,7 @@ class SkusController < ApplicationController
     end
 
     apply_sorting
-    @skus = @skus.page(params[:page]).per(12)
+    @skus = @skus.page(params[:page]).per(24)
   end
 
   def show

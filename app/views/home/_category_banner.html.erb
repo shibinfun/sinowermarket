@@ -5,10 +5,10 @@
     <div class="mx-auto flex w-full max-w-full relative">
       <ul class="m-0 flex flex-wrap border-l border-gray-50 p-0 list-none" role="menubar" aria-label="Main navigation menu">
         <% @categories.first(18).each do |category| %>
-          <li class="w-[16.6666%] cursor-pointer hover:bg-gray-100 transition-colors duration-150 border-r border-b border-gray-50 last:border-r-0"
+          <li class="w-[16.6666%] cursor-pointer hover:bg-gray-100 transition-colors duration-150 border-r border-b border-gray-50 last:border-r-0 group"
               tabindex="0"
               role="menuitem"
-              data-action="mouseover->category-tabs#toggle"
+              data-action="mouseover->category-tabs#toggle click->category-tabs#lock"
               data-id="<%= category.id %>"
               data-category-tabs-target="tab">
             <div class="relative h-[44px]">
@@ -16,6 +16,13 @@
                 <%= display_image(category.image, alt: "", class: "max-h-[22px] max-w-[22px] opacity-60 grayscale brightness-50 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100", loading: "eager", width: 22, height: 22) %>
                 <span class="ml-2.5 truncate text-xs font-semibold text-gray-700 tracking-tight"><%= category.name %></span>
               <% end %>
+              
+              <!-- 锁定提示进度条 -->
+              <div class="absolute bottom-0 left-0 w-full h-[3px] bg-transparent overflow-hidden">
+                <div data-category-tabs-target="indicator" 
+                     data-id="<%= category.id %>"
+                     class="h-full bg-blue-600 w-0 transition-none opacity-0"></div>
+              </div>
             </div>
           </li>
         <% end %>

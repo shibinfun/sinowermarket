@@ -23,10 +23,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col" data-controller="navbar-spacer">
     <%= render "shared/navbar" %>
     
-    <main class="flex-grow" data-controller="navbar-spacer">
+    <main class="flex-grow">
       <div class="max-w-screen-2xl mx-auto py-6">
         <% if notice %>
           <div data-controller="flash" class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm flex justify-between items-center" role="alert">
