@@ -41,7 +41,7 @@
                     data-sku-images-target="thumbnail"
                     data-index="<%= index %>"
                     data-full-url="<%= url_for(image) %>">
-              <%= image_tag image.variant(resize_to_limit: [150, 150]), class: "max-h-full max-w-full object-contain mix-blend-multiply" %>
+              <%= display_variant(image, { resize_to_limit: [150, 150] }, { class: "max-h-full max-w-full object-contain mix-blend-multiply" }) %>
             </button>
           <% end %>
         </div>

@@ -9,7 +9,17 @@ module ApplicationHelper
 
   def display_variant(attachment, variant_options = {}, image_options = {})
     if attachment.respond_to?(:attached?) ? attachment.attached? : attachment.present?
-      image_tag attachment.variant(variant_options), image_options
+      # If only two arguments are passed and the second one is a hash with :class, it's likely image_options
+      if image_options.empty? && variant_options.is_a?(Hash) && variant_options.key?(:class)
+        image_options = variant_options
+        variant_options = {}
+      end
+
+      if attachment.variable?
+        image_tag attachment.variant(variant_options), image_options
+      else
+        image_tag attachment, image_options
+      end
     else
       image_tag "logo.png", image_options.merge(class: "#{image_options[:class]} opacity-20 grayscale")
     end
