@@ -1,0 +1,56 @@
+<%= form_with(model: [:account, address], class: "space-y-6") do |f| %>
+  <% if address.errors.any? %>
+    <div class="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+      <h3 class="font-bold mb-2"><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h3>
+      <ul class="list-disc list-inside">
+        <% address.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <%= f.label :name, "Recipient Name", class: "block text-sm font-bold text-gray-700 mb-2" %>
+      <%= f.text_field :name, class: "w-full rounded-xl border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-sm", placeholder: "e.g. John Doe" %>
+    </div>
+
+    <div>
+      <%= f.label :phone, "Phone Number", class: "block text-sm font-bold text-gray-700 mb-2" %>
+      <%= f.text_field :phone, class: "w-full rounded-xl border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-sm", placeholder: "e.g. +1 123 456 7890" %>
+    </div>
+
+    <div>
+      <%= f.label :province, "Province / State", class: "block text-sm font-bold text-gray-700 mb-2" %>
+      <%= f.text_field :province, class: "w-full rounded-xl border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-sm", placeholder: "e.g. Ontario" %>
+    </div>
+
+    <div>
+      <%= f.label :city, "City", class: "block text-sm font-bold text-gray-700 mb-2" %>
+      <%= f.text_field :city, class: "w-full rounded-xl border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-sm", placeholder: "e.g. Toronto" %>
+    </div>
+
+    <div>
+      <%= f.label :district, "District / Area (Optional)", class: "block text-sm font-bold text-gray-700 mb-2" %>
+      <%= f.text_field :district, class: "w-full rounded-xl border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-sm", placeholder: "e.g. North York" %>
+    </div>
+
+    <div class="md:col-span-2">
+      <%= f.label :detail_address, "Detailed Address", class: "block text-sm font-bold text-gray-700 mb-2" %>
+      <%= f.text_area :detail_address, rows: 3, class: "w-full rounded-xl border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-sm", placeholder: "Street name, building number, apartment, etc." %>
+    </div>
+
+    <div class="md:col-span-2">
+      <div class="flex items-center">
+        <%= f.check_box :is_default, class: "w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <%= f.label :is_default, "Set as default address", class: "ml-3 text-sm font-bold text-gray-700" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-100">
+    <%= link_to "Cancel", account_addresses_path, class: "px-6 py-2.5 text-sm font-bold text-gray-500 hover:text-gray-700 transition-colors" %>
+    <%= f.submit class: "px-8 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-xl hover:bg-blue-700 transition-all shadow-md shadow-blue-500/20 cursor-pointer" %>
+  </div>
+<% end %>

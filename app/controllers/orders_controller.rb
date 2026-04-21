@@ -13,6 +13,15 @@ class OrdersController < ApplicationController
   def new
     @order = current_user.orders.new
     @order.build_from_cart(current_cart, @currency)
+    
+    # Pre-fill with default address if available
+    if default_address = current_user.addresses.find_by(is_default: true)
+      @order.name = default_address.name
+      @order.phone = default_address.phone
+      @order.address = default_address.full_address
+    end
+
+    @addresses = current_user.addresses.ordered
   end
 
   def create
@@ -24,6 +33,7 @@ class OrdersController < ApplicationController
       session[:cart_id] = nil
       redirect_to @order, notice: "Order was successfully created."
     else
+      @addresses = current_user.addresses.ordered
       render :new, status: :unprocessable_entity
     end
   end

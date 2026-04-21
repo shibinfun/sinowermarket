@@ -24,6 +24,20 @@
         </div>
       <% end %>
 
+      <!-- Addresses Card -->
+      <%= link_to account_addresses_path, class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{controller_name == 'addresses' ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-gray-50 hover:border-gray-200'}" do %>
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 <%= controller_name == 'addresses' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-semibold <%= controller_name == 'addresses' ? 'text-blue-700' : 'text-gray-700 group-hover:text-blue-700' %> transition-colors duration-200">My Addresses</p>
+          <p class="text-[11px] text-gray-400">Manage shipping addresses</p>
+        </div>
+      <% end %>
+
       <!-- Profile Card (Placeholder) -->
       <div class="flex items-center gap-3 p-3 rounded-xl mb-2 border border-transparent opacity-50 cursor-not-allowed">
         <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-gray-100 text-gray-400">

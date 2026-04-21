@@ -22,6 +22,11 @@ Rails.application.routes.draw do
   namespace :account do
     root "orders#index", as: :root
     resources :orders, only: [:index, :show]
+    resources :addresses do
+      member do
+        post :set_default
+      end
+    end
   end
 
   # Admin routes
