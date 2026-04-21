@@ -50,12 +50,13 @@ class Order < ApplicationRecord
     update(status: "delivered") if can_complete?
   end
 
-  def build_from_cart(cart)
+  def build_from_cart(cart, currency = "USD")
+    self.currency = currency
     cart.cart_items.each do |item|
       order_items.build(
         sku: item.sku,
         quantity: item.quantity,
-        price: item.sku.current_price || 0,
+        price: item.sku.price_in(currency) || 0,
         name: item.sku.name
       )
     end

@@ -56,13 +56,15 @@
             </h3>
             
             <div class="mt-4 flex items-baseline gap-3">
-              <% if sku.current_price.present? %>
+              <% current_price = sku.price_in(@currency) %>
+              <% original_price = sku.original_price_in(@currency) %>
+              <% if current_price.present? %>
                 <span class="text-2xl font-black text-blue-600">
-                  <%= number_to_currency(sku.current_price) %>
+                  <%= format_price(current_price) %>
                 </span>
-                <% if sku.original_price.present? && sku.original_price > sku.current_price %>
+                <% if original_price.present? && original_price > current_price %>
                   <span class="text-sm text-slate-400 line-through">
-                    <%= number_to_currency(sku.original_price) %>
+                    <%= format_price(original_price) %>
                   </span>
                 <% end %>
               <% else %>

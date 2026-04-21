@@ -12,12 +12,12 @@ class OrdersController < ApplicationController
 
   def new
     @order = current_user.orders.new
-    @order.build_from_cart(current_cart)
+    @order.build_from_cart(current_cart, @currency)
   end
 
   def create
     @order = current_user.orders.new(order_params)
-    @order.build_from_cart(current_cart)
+    @order.build_from_cart(current_cart, @currency)
 
     if @order.save
       current_cart.destroy

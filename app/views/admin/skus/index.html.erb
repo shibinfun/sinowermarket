@@ -76,20 +76,23 @@
                   <% end %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="flex flex-col gap-0.5">
-                    <% if sku.original_price.present? %>
-                      <div class="flex items-baseline gap-2">
-                        <span class="text-lg font-bold text-emerald-600"><%= number_to_currency sku.current_price %></span>
-                        <span class="text-xs text-slate-400 line-through decoration-slate-400/60"><%= number_to_currency sku.original_price %></span>
-                      </div>
-                    <% else %>
-                      <span class="text-lg font-bold text-emerald-600"><%= number_to_currency sku.current_price %></span>
-                    <% end %>
-                    <% if sku.original_price.present? && sku.original_price > sku.current_price %>
-                      <span class="text-xs font-medium text-red-500 bg-red-50 px-1.5 py-0.5 rounded w-fit">
-                        Save <%= number_to_percentage((1 - sku.current_price.to_f / sku.original_price) * 100, precision: 0) %>
-                      </span>
-                    <% end %>
+                  <div class="flex flex-col gap-1">
+                    <!-- USD Prices -->
+                    <div class="flex items-center gap-2">
+                      <span class="text-[10px] font-black text-slate-400 uppercase w-8">USD</span>
+                      <span class="text-sm font-bold text-slate-700"><%= format_price(sku.current_price_usd, "USD") %></span>
+                      <% if sku.original_price_usd.present? && sku.original_price_usd > sku.current_price_usd %>
+                        <span class="text-[10px] text-slate-400 line-through"><%= format_price(sku.original_price_usd, "USD") %></span>
+                      <% end %>
+                    </div>
+                    <!-- CAD Prices -->
+                    <div class="flex items-center gap-2">
+                      <span class="text-[10px] font-black text-slate-400 uppercase w-8">CAD</span>
+                      <span class="text-sm font-bold text-slate-700"><%= format_price(sku.current_price_cad, "CAD") %></span>
+                      <% if sku.original_price_cad.present? && sku.original_price_cad > sku.current_price_cad %>
+                        <span class="text-[10px] text-slate-400 line-through"><%= format_price(sku.original_price_cad, "CAD") %></span>
+                      <% end %>
+                    </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

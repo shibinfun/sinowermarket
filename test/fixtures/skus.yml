@@ -2,10 +2,12 @@
 
 sku_electronics:
   name: MacBook Pro
-  current_price: 1999.99
+  current_price_usd: 1999.99
+  current_price_cad: 2699.99
   category: sub_category
 
 sku_clothing:
   name: T-Shirt
-  current_price: 19.99
+  current_price_usd: 19.99
+  current_price_cad: 26.99
   category: sub_clothing

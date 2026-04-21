@@ -30,7 +30,8 @@
 
   <div class="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
     <!-- 产品图片展示 (左侧) -->
-      <div class="mb-10 lg:mb-0 flex flex-row gap-6 overflow-hidden" data-controller="sku-images" data-sku-images-current-index-value="0">
+    <div class="mb-10 lg:mb-0 flex flex-col">
+      <div class="flex flex-row gap-6 overflow-hidden" data-controller="sku-images" data-sku-images-current-index-value="0">
         <!-- 多图预览 (如果有多张图) -->
         <% if @sku.images.count > 1 %>
           <div class="flex flex-col gap-4 overflow-y-auto overflow-x-hidden max-h-[400px] md:max-h-[600px] scrollbar-hide w-16 md:w-24 shrink-0 pb-2 pr-1">
@@ -71,6 +72,10 @@
         <% end %>
       </div>
     </div>
+    <div class="mt-4 text-sm text-slate-500 italic text-center lg:text-left">
+      * The picture may slightly differ from the original.
+    </div>
+  </div>
 
     <!-- 产品信息 (右侧) -->
     <div class="flex flex-col">
@@ -82,16 +87,18 @@
           <%= @sku.name %>
         </h1>
         <div class="flex items-baseline gap-4 mt-6">
-          <% if @sku.current_price.present? %>
+          <% current_price = @sku.price_in(@currency) %>
+          <% original_price = @sku.original_price_in(@currency) %>
+          <% if current_price.present? %>
             <span class="text-4xl font-black text-blue-600">
-              <%= number_to_currency(@sku.current_price) %>
+              <%= format_price(current_price) %>
             </span>
-            <% if @sku.original_price.present? && @sku.original_price > @sku.current_price %>
+            <% if original_price.present? && original_price > current_price %>
               <span class="text-xl text-slate-400 line-through">
-                <%= number_to_currency(@sku.original_price) %>
+                <%= format_price(original_price) %>
               </span>
               <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-green-100 text-green-800">
-                SAVE <%= number_to_currency(@sku.original_price - @sku.current_price) %>
+                SAVE <%= format_price(original_price - current_price) %>
               </span>
             <% end %>
           <% else %>
@@ -126,31 +133,30 @@
           </div>
         <% end %>
 
-        <!-- Add to Cart / Contact Buttons -->
+        <!-- Add to Cart / Share Buttons -->
         <div class="pt-4 flex flex-col sm:flex-row gap-4">
-          <% if @sku.current_price.present? %>
-            <%= button_to cart_items_path(sku_id: @sku.id), class: "flex-1 inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200 active:scale-95" do %>
-              Add to Cart
-              <svg class="ml-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-              </svg>
-            <% end %>
-          <% else %>
-            <button class="flex-1 inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200 active:scale-95">
-              Request Quote
-            </button>
+          <%= button_to cart_items_path(sku_id: @sku.id), class: "flex-1 inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200 active:scale-95" do %>
+            Add to Cart
+            <svg class="ml-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
           <% end %>
           <div data-controller="share" 
                data-share-title-value="<%= @sku.name %>" 
                data-share-text-value="Check out this product on Sinower Market: <%= @sku.name %>"
                data-share-url-value="<%= request.original_url %>"
-               class="flex-none">
-            <button data-action="click->share#share" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-all active:scale-95 shadow-sm">
-              Share
-              <svg class="ml-1.5 h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               class="flex-none relative">
+            <button data-action="click->share#share" 
+                    data-share-target="button"
+                    class="h-full inline-flex items-center justify-center px-6 rounded-2xl bg-white border border-slate-200 text-slate-600 font-bold text-lg hover:bg-slate-50 transition-all active:scale-95 shadow-sm">
+              <svg class="h-6 w-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
               </svg>
+              <span class="ml-2 sm:hidden">Share</span>
             </button>
+            <div data-share-target="success" class="hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-slate-800 text-white text-xs rounded-lg whitespace-nowrap">
+              Link copied!
+            </div>
           </div>
         </div>
       </div>

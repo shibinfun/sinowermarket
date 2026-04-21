@@ -30,14 +30,39 @@
       <%= f.collection_select :category_id, Category.where.not(parent_id: nil).ordered, :id, :name, { prompt: "Select a sub-category" }, { class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors" } %>
     </div>
 
-    <div class="grid grid-cols-2 gap-4 col-span-2 md:col-span-1">
-      <div>
-        <%= f.label :original_price, class: "block text-sm font-semibold text-slate-700 mb-2" %>
-        <%= f.number_field :original_price, step: 0.01, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Original" %>
+    <div class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+        <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+          USD Prices (美金)
+        </h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <%= f.label :original_price_usd, "Original (USD)", class: "block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5" %>
+            <%= f.number_field :original_price_usd, step: 0.01, class: "w-full rounded-xl border-slate-200 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors font-bold", placeholder: "0.00" %>
+          </div>
+          <div>
+            <%= f.label :current_price_usd, "Sale (USD)", class: "block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5" %>
+            <%= f.number_field :current_price_usd, step: 0.01, class: "w-full rounded-xl border-slate-200 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors font-bold text-blue-600", placeholder: "0.00" %>
+          </div>
+        </div>
       </div>
-      <div>
-        <%= f.label :current_price, class: "block text-sm font-semibold text-slate-700 mb-2" %>
-        <%= f.number_field :current_price, step: 0.01, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Sale price" %>
+
+      <div class="space-y-4 p-4 bg-amber-50/30 rounded-2xl border border-amber-100/50">
+        <h3 class="text-xs font-black text-amber-600/60 uppercase tracking-widest flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+          CAD Prices (加币)
+        </h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <%= f.label :original_price_cad, "Original (CAD)", class: "block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5" %>
+            <%= f.number_field :original_price_cad, step: 0.01, class: "w-full rounded-xl border-slate-200 shadow-sm focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-sm transition-colors font-bold", placeholder: "0.00" %>
+          </div>
+          <div>
+            <%= f.label :current_price_cad, "Sale (CAD)", class: "block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5" %>
+            <%= f.number_field :current_price_cad, step: 0.01, class: "w-full rounded-xl border-slate-200 shadow-sm focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-sm transition-colors font-bold text-amber-700", placeholder: "0.00" %>
+          </div>
+        </div>
       </div>
     </div>
 

@@ -14,6 +14,24 @@ class Sku < ApplicationRecord
   validates :name, presence: true
   validates :category_id, presence: true
   
+  def price_in(currency)
+    case currency.to_s.upcase
+    when "CAD"
+      current_price_cad
+    else
+      current_price_usd
+    end
+  end
+
+  def original_price_in(currency)
+    case currency.to_s.upcase
+    when "CAD"
+      original_price_cad
+    else
+      original_price_usd
+    end
+  end
+
   # 验证是否关联到二级分类（子分类）
   validate :must_be_child_category
 

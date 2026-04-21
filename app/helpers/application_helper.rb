@@ -14,4 +14,10 @@ module ApplicationHelper
       image_tag "logo.png", image_options.merge(class: "#{image_options[:class]} opacity-20 grayscale")
     end
   end
+
+  def format_price(amount, currency = nil)
+    currency ||= @currency || "USD"
+    unit = currency == "CAD" ? "C$" : "$"
+    number_to_currency(amount, unit: unit)
+  end
 end

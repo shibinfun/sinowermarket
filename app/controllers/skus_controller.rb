@@ -27,11 +27,12 @@ class SkusController < ApplicationController
   private
 
   def apply_sorting
+    price_column = @currency == "CAD" ? :current_price_cad : :current_price_usd
     case params[:sort]
     when "price_asc"
-      @skus = @skus.order(current_price: :asc)
+      @skus = @skus.order(price_column => :asc)
     when "price_desc"
-      @skus = @skus.order(current_price: :desc)
+      @skus = @skus.order(price_column => :desc)
     else
       @skus = @skus.order(created_at: :desc)
     end

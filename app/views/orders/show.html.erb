@@ -22,7 +22,8 @@
     <div class="bg-white shadow rounded-lg p-6">
       <h2 class="text-xl font-semibold mb-4 border-b pb-2">Order Information</h2>
       <p><strong>Date:</strong> <%= @order.created_at.strftime("%B %d, %Y %H:%M") %></p>
-      <p><strong>Total Amount:</strong> <span class="text-xl font-bold text-blue-600"><%= number_to_currency(@order.total_price) %></span></p>
+      <p><strong>Total Amount:</strong> <span class="text-xl font-bold text-blue-600"><%= format_price(@order.total_price, @order.currency) %></span></p>
+      <p><strong>Currency:</strong> <span class="text-sm font-semibold text-slate-500"><%= @order.currency %></span></p>
       
       <% if @order.status == 'pending' %>
         <div class="mt-4 space-y-2">
@@ -47,9 +48,9 @@
         <% @order.order_items.each do |item| %>
           <tr>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.name %></td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right"><%= number_to_currency(item.price) %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right"><%= format_price(item.price, @order.currency) %></td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right"><%= item.quantity %></td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium text-right"><%= number_to_currency(item.price * item.quantity) %></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium text-right"><%= format_price(item.price * item.quantity, @order.currency) %></td>
           </tr>
         <% end %>
       </tbody>

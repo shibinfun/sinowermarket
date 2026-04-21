@@ -76,7 +76,7 @@ module Admin
       end
 
       def sku_params
-        params.require(:sku).permit(:name, :original_price, :current_price, :description, :technical_data, :category_id, :specsheet, images: []).tap do |p|
+        params.require(:sku).permit(:name, :original_price_usd, :current_price_usd, :original_price_cad, :current_price_cad, :description, :technical_data, :category_id, :specsheet, images: []).tap do |p|
           if p[:images].present?
             p[:images] = p[:images].reject(&:blank?)
           end

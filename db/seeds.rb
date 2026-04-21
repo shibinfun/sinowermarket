@@ -395,11 +395,12 @@ categories_data.each_with_index do |cat_data, index|
     # Create SKUs for this subcategory
     child_data[:skus].each do |sku_data|
       sku = Sku.find_or_create_by!(name: sku_data[:name], category: child) do |s|
-        s.original_price = sku_data[:price]
-        s.current_price = sku_data[:price]
+        s.original_price_usd = sku_data[:price]
+        s.current_price_usd = sku_data[:price]
+        s.original_price_cad = (sku_data[:price] * 1.35).round(2)
+        s.current_price_cad = (sku_data[:price] * 1.35).round(2)
         s.description = "#{sku_data[:name]} - Professional grade commercial kitchen equipment."
       end
-j
       # Add placeholder image if none attached
       if !sku.images.attached?
         begin
