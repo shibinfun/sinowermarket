@@ -53,6 +53,7 @@ gem "rack-attack"
 
 # Password strength validation [https://github.com/envato/zxcvbn-ruby]
 gem "zxcvbn-ruby"
+gem "http_accept_language"
 
 # Tailwind CSS for Rails [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-rails"

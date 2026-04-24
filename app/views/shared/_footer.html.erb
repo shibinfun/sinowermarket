@@ -11,21 +11,21 @@
 
       <!-- Quick Links -->
       <div>
-        <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Quick Links</h3>
+        <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4"><%= t('layouts.footer.quick_links') %></h3>
         <ul class="space-y-2">
           <li>
             <%= link_to terms_path, class: "text-slate-400 hover:text-white transition-colors duration-200 text-sm" do %>
-              Terms of Service
+              <%= t('layouts.footer.terms_of_service') %>
             <% end %>
           </li>
           <li>
             <%= link_to privacy_path, class: "text-slate-400 hover:text-white transition-colors duration-200 text-sm" do %>
-              Privacy Policy
+              <%= t('layouts.footer.privacy_policy') %>
             <% end %>
           </li>
           <li>
             <%= link_to contact_path, class: "text-slate-400 hover:text-white transition-colors duration-200 text-sm" do %>
-              Contact Us
+              <%= t('layouts.navbar.contact_us') %>
             <% end %>
           </li>
         </ul>
@@ -76,7 +76,7 @@
     <!-- Copyright Section -->
     <div class="border-t border-white/10 pt-8">
       <p class="text-center text-slate-400 text-sm">
-        &copy; 2026 <%= link_to "Sinower&trade;", root_path, class: "hover:text-white hover:underline transition-colors duration-200" %>. All Rights Reserved.
+        &copy; 2026 <%= link_to "Sinower&trade;", root_path, class: "hover:text-white hover:underline transition-colors duration-200" %>. <%= t('layouts.footer.rights_reserved') %>
       </p>
     </div>
   </div>

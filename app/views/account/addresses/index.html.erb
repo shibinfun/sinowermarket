@@ -1,15 +1,15 @@
 <div class="flex items-center justify-between mb-8">
-  <h1 class="text-2xl font-bold text-gray-900">My Addresses</h1>
+  <h1 class="text-2xl font-bold text-gray-900"><%= t('.title') %></h1>
   <% if @addresses.count < 3 %>
     <%= link_to new_account_address_path, class: "inline-flex items-center px-4 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-xl hover:bg-blue-700 transition-all shadow-md shadow-blue-500/20" do %>
       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
       </svg>
-      Add New Address
+      <%= t('.add_new') %>
     <% end %>
   <% else %>
     <div class="text-sm font-medium text-gray-500 bg-gray-100 px-4 py-2 rounded-lg">
-      Maximum of 3 addresses reached
+      <%= t('.max_reached') %>
     </div>
   <% end %>
 </div>
@@ -21,7 +21,7 @@
         <% if address.is_default? %>
           <div class="absolute top-0 right-0 mt-4 mr-4">
             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700">
-              Default
+              <%= t('.default') %>
             </span>
           </div>
         <% end %>
@@ -51,16 +51,16 @@
         <div class="flex items-center justify-between pt-4 border-t border-gray-100">
           <div class="flex items-center space-x-4">
             <%= link_to edit_account_address_path(address), class: "text-sm font-bold text-gray-400 hover:text-blue-600 transition-colors" do %>
-              Edit
+              <%= t('.edit') %>
             <% end %>
-            <%= button_to account_address_path(address), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-sm font-bold text-gray-400 hover:text-red-600 transition-colors" do %>
-              Delete
+            <%= button_to account_address_path(address), method: :delete, data: { turbo_confirm: t('.are_you_sure') }, class: "text-sm font-bold text-gray-400 hover:text-red-600 transition-colors" do %>
+              <%= t('.delete') %>
             <% end %>
           </div>
           
           <% unless address.is_default? %>
             <%= button_to set_default_account_address_path(address), method: :post, class: "text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors" do %>
-              Set as Default
+              <%= t('.set_as_default') %>
             <% end %>
           <% end %>
         </div>
@@ -75,12 +75,12 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     </div>
-    <h3 class="text-lg font-bold text-gray-900 mb-2">No addresses found</h3>
-    <p class="text-gray-500 mb-8 max-w-sm mx-auto">You haven't added any shipping addresses yet. Add one to speed up your checkout process.</p>
+    <h3 class="text-lg font-bold text-gray-900 mb-2"><%= t('.no_addresses') %></h3>
+    <p class="text-gray-500 mb-8 max-w-sm mx-auto"><%= t('.no_addresses_description') %></p>
     <% if @addresses.count < 3 %>
-      <%= link_to "Add New Address", new_account_address_path, class: "inline-flex items-center px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20" %>
+      <%= link_to t('.add_new'), new_account_address_path, class: "inline-flex items-center px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20" %>
     <% else %>
-      <p class="text-sm font-bold text-gray-500">Maximum of 3 addresses reached</p>
+      <p class="text-sm font-bold text-gray-500"><%= t('.max_reached') %></p>
     <% end %>
   </div>
 <% end %>

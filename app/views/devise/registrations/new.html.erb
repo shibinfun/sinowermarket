@@ -3,8 +3,8 @@
     <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 p-8 sm:p-10 border border-slate-100">
       <div class="mb-10 text-center">
         <%= image_tag "logo.png", alt: "Sinower Market", class: "mx-auto h-14 w-auto" %>
-        <h2 class="mt-6 text-3xl font-bold tracking-tight text-slate-900">Create account</h2>
-        <p class="mt-2 text-sm text-slate-500">Join our community today</p>
+        <h2 class="mt-6 text-3xl font-bold tracking-tight text-slate-900"><%= t('.title') %></h2>
+        <p class="mt-2 text-sm text-slate-500"><%= t('.subtitle') %></p>
       </div>
       
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
@@ -12,23 +12,23 @@
 
         <div class="space-y-5">
           <div>
-            <%= f.label :email, class: "block text-sm font-semibold text-slate-700 mb-1.5 ml-1" %>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "block w-full px-4 py-3.5 bg-slate-50 border-0 text-slate-900 rounded-2xl ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white sm:text-sm sm:leading-6 transition-all duration-200", placeholder: "Email address" %>
+            <%= f.label :email, t('.email'), class: "block text-sm font-semibold text-slate-700 mb-1.5 ml-1" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "block w-full px-4 py-3.5 bg-slate-50 border-0 text-slate-900 rounded-2xl ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white sm:text-sm sm:leading-6 transition-all duration-200", placeholder: t('.email') %>
           </div>
 
           <div>
             <div class="flex justify-between items-end mb-1.5 ml-1">
-              <%= f.label :password, class: "block text-sm font-semibold text-slate-700" %>
+              <%= f.label :password, t('.password'), class: "block text-sm font-semibold text-slate-700" %>
               <% if @minimum_password_length %>
-                <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">min <%= @minimum_password_length %> chars</span>
+                <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider"><%= t('.min_chars', count: @minimum_password_length) %></span>
               <% end %>
             </div>
-            <%= f.password_field :password, autocomplete: "new-password", class: "block w-full px-4 py-3.5 bg-slate-50 border-0 text-slate-900 rounded-2xl ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white sm:text-sm sm:leading-6 transition-all duration-200", placeholder: "Create a password" %>
+            <%= f.password_field :password, autocomplete: "new-password", class: "block w-full px-4 py-3.5 bg-slate-50 border-0 text-slate-900 rounded-2xl ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white sm:text-sm sm:leading-6 transition-all duration-200", placeholder: t('.password_placeholder') %>
           </div>
 
           <div>
-            <%= f.label :password_confirmation, class: "block text-sm font-semibold text-slate-700 mb-1.5 ml-1" %>
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block w-full px-4 py-3.5 bg-slate-50 border-0 text-slate-900 rounded-2xl ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white sm:text-sm sm:leading-6 transition-all duration-200", placeholder: "Confirm your password" %>
+            <%= f.label :password_confirmation, t('.password_confirmation'), class: "block text-sm font-semibold text-slate-700 mb-1.5 ml-1" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block w-full px-4 py-3.5 bg-slate-50 border-0 text-slate-900 rounded-2xl ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white sm:text-sm sm:leading-6 transition-all duration-200", placeholder: t('.password_confirmation_placeholder') %>
           </div>
         </div>
 
@@ -38,16 +38,16 @@
           </div>
           <div class="ml-3 text-sm leading-6">
             <%= f.label :terms_of_service, class: "text-slate-600 cursor-pointer" do %>
-              I agree to the 
-              <%= link_to "Terms", terms_path, class: "font-semibold text-blue-600 hover:text-blue-500 underline decoration-2 underline-offset-4 decoration-blue-100 hover:decoration-blue-200 transition-all" %>
-              and
-              <%= link_to "Privacy", privacy_path, class: "font-semibold text-blue-600 hover:text-blue-500 underline decoration-2 underline-offset-4 decoration-blue-100 hover:decoration-blue-200 transition-all" %>
+              <%= t('.agree_to') %> 
+              <%= link_to t('.terms'), terms_path, class: "font-semibold text-blue-600 hover:text-blue-500 underline decoration-2 underline-offset-4 decoration-blue-100 hover:decoration-blue-200 transition-all" %>
+              <%= t('.and') %>
+              <%= link_to t('.privacy'), privacy_path, class: "font-semibold text-blue-600 hover:text-blue-500 underline decoration-2 underline-offset-4 decoration-blue-100 hover:decoration-blue-200 transition-all" %>
             <% end %>
           </div>
         </div>
 
         <div>
-          <%= f.submit "Create Account", class: "w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 cursor-pointer transition-all duration-200 active:scale-[0.98]" %>
+          <%= f.submit t('.submit'), class: "w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 cursor-pointer transition-all duration-200 active:scale-[0.98]" %>
         </div>
       <% end %>
 
