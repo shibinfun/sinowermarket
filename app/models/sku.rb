@@ -9,10 +9,47 @@ class Sku < ApplicationRecord
   has_one_attached :specsheet
 
   has_rich_text :description
+  has_rich_text :description_fr
+  has_rich_text :description_es
   has_rich_text :technical_data
+  has_rich_text :technical_data_fr
+  has_rich_text :technical_data_es
 
-  validates :name, presence: true
+  validates :name, :name_fr, :name_es, presence: true
   validates :category_id, presence: true
+  
+  def display_name
+    case I18n.locale
+    when :fr
+      name_fr.presence || name
+    when :es
+      name_es.presence || name
+    else
+      name
+    end
+  end
+
+  def display_description
+    case I18n.locale
+    when :fr
+      description_fr.presence || description
+    when :es
+      description_es.presence || description
+    else
+      description
+    end
+  end
+
+  def display_technical_data
+    case I18n.locale
+    when :fr
+      technical_data_fr.presence || technical_data
+    when :es
+      technical_data_es.presence || technical_data
+    else
+      technical_data
+    end
+  end
   
   def price_in(currency)
     case currency.to_s.upcase

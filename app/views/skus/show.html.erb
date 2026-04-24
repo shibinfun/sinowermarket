@@ -10,14 +10,14 @@
           <svg class="h-5 w-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
           </svg>
-          <span class="hover:text-blue-600 cursor-default"><%= @parent_category.name %></span>
+          <span class="hover:text-blue-600 cursor-default"><%= @parent_category.display_name %></span>
         </li>
       <% end %>
       <li class="flex items-center space-x-2">
         <svg class="h-5 w-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
         </svg>
-        <%= link_to @category.name, category_path(@category), class: "hover:text-blue-600 transition-colors" %>
+        <%= link_to @category.display_name, category_path(@category), class: "hover:text-blue-600 transition-colors" %>
       </li>
       <li class="flex items-center space-x-2">
         <svg class="h-5 w-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20">
@@ -84,7 +84,7 @@
           SKU: <%= @sku.id %>
         </div>
         <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
-          <%= @sku.name %>
+          <%= @sku.display_name %>
         </h1>
         <div class="flex items-baseline gap-4 mt-6">
           <% current_price = @sku.price_in(@currency) %>
@@ -174,13 +174,13 @@
       </div>
       <div class="flex-1 bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="p-6 md:p-8 text-slate-600 prose prose-slate max-w-none">
-          <%= @sku.description %>
+          <%= @sku.display_description %>
         </div>
       </div>
     </div>
 
     <!-- 技术数据 (第二栏) -->
-    <div class="flex flex-col <%= @sku.technical_data.blank? ? 'hidden' : '' %>">
+    <div class="flex flex-col <%= @sku.display_technical_data.blank? ? 'hidden' : '' %>">
       <div class="border-b border-slate-200 mb-6">
         <h2 class="text-xl font-bold text-slate-900 pb-3 inline-block border-b-4 border-blue-600">
           <%= t('.technical_specifications') %>
@@ -188,7 +188,7 @@
       </div>
       <div class="flex-1 bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="p-6 md:p-8 text-slate-600 prose prose-blue max-w-none">
-          <%= @sku.technical_data %>
+          <%= @sku.display_technical_data %>
         </div>
       </div>
     </div>

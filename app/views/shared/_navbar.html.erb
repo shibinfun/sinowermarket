@@ -349,7 +349,7 @@
         <div class="flex flex-wrap px-2">
           <% Category.where(parent_id: nil).order(:position).limit(10).each do |category| %>
             <%= link_to category_path(category), class: "inline-block px-3 py-1.5 m-1 text-[11px] font-medium text-gray-600 hover:text-[#273990] bg-gray-50 hover:bg-blue-50 rounded-lg border border-gray-100 transition-all" do %>
-              <%= category.name %>
+              <%= category.display_name %>
             <% end %>
           <% end %>
         </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_24_052750) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_24_103619) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -87,6 +87,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_24_052750) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name_fr"
+    t.string "name_es"
     t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
@@ -130,6 +132,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_24_052750) do
     t.decimal "current_price_usd", precision: 10, scale: 2
     t.decimal "original_price_cad", precision: 10, scale: 2
     t.decimal "current_price_cad", precision: 10, scale: 2
+    t.string "name_fr"
+    t.string "name_es"
     t.index ["category_id"], name: "index_skus_on_category_id"
   end
 

@@ -19,11 +19,22 @@
     </div>
   <% end %>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="col-span-2">
-      <%= f.label :name, class: "block text-sm font-semibold text-slate-700 mb-2" %>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div>
+      <%= f.label :name, "Name (English)", class: "block text-sm font-semibold text-slate-700 mb-2" %>
       <%= f.text_field :name, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Product name" %>
     </div>
+    <div>
+      <%= f.label :name_fr, "Name (French)", class: "block text-sm font-semibold text-slate-700 mb-2" %>
+      <%= f.text_field :name_fr, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Nom du produit" %>
+    </div>
+    <div>
+      <%= f.label :name_es, "Name (Spanish)", class: "block text-sm font-semibold text-slate-700 mb-2" %>
+      <%= f.text_field :name_es, class: "w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Nombre del producto" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
     <div class="col-span-2 md:col-span-1">
       <%= f.label :category_id, "Category (Sub-category only)", class: "block text-sm font-semibold text-slate-700 mb-2" %>
@@ -66,14 +77,46 @@
       </div>
     </div>
 
-    <div class="col-span-2">
-      <%= f.label :description, class: "block text-sm font-semibold text-slate-700 mb-2" %>
-      <%= f.rich_text_area :description, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[200px] bg-white transition-colors prose max-w-none", placeholder: "Product description..." %>
+    <div class="col-span-2 space-y-6">
+      <div class="flex items-center gap-4 mb-2">
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Description</h3>
+        <div class="flex-grow h-px bg-slate-200"></div>
+      </div>
+      <div class="grid grid-cols-1 gap-6">
+        <div>
+          <%= f.label :description, "English Description", class: "block text-xs font-bold text-slate-500 uppercase mb-2" %>
+          <%= f.rich_text_area :description, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[150px] bg-white transition-colors prose max-w-none", placeholder: "Product description..." %>
+        </div>
+        <div>
+          <%= f.label :description_fr, "French Description", class: "block text-xs font-bold text-slate-500 uppercase mb-2" %>
+          <%= f.rich_text_area :description_fr, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[150px] bg-white transition-colors prose max-w-none", placeholder: "Description du produit..." %>
+        </div>
+        <div>
+          <%= f.label :description_es, "Spanish Description", class: "block text-xs font-bold text-slate-500 uppercase mb-2" %>
+          <%= f.rich_text_area :description_es, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[150px] bg-white transition-colors prose max-w-none", placeholder: "Descripción del producto..." %>
+        </div>
+      </div>
     </div>
 
-    <div class="col-span-2">
-      <%= f.label :technical_data, class: "block text-sm font-semibold text-slate-700 mb-2" %>
-      <%= f.rich_text_area :technical_data, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[200px] bg-white transition-colors prose max-w-none", placeholder: "Technical specifications..." %>
+    <div class="col-span-2 space-y-6">
+      <div class="flex items-center gap-4 mb-2">
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Technical Data</h3>
+        <div class="flex-grow h-px bg-slate-200"></div>
+      </div>
+      <div class="grid grid-cols-1 gap-6">
+        <div>
+          <%= f.label :technical_data, "English Technical Data", class: "block text-xs font-bold text-slate-500 uppercase mb-2" %>
+          <%= f.rich_text_area :technical_data, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[150px] bg-white transition-colors prose max-w-none", placeholder: "Technical specifications..." %>
+        </div>
+        <div>
+          <%= f.label :technical_data_fr, "French Technical Data", class: "block text-xs font-bold text-slate-500 uppercase mb-2" %>
+          <%= f.rich_text_area :technical_data_fr, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[150px] bg-white transition-colors prose max-w-none", placeholder: "Données techniques..." %>
+        </div>
+        <div>
+          <%= f.label :technical_data_es, "Spanish Technical Data", class: "block text-xs font-bold text-slate-500 uppercase mb-2" %>
+          <%= f.rich_text_area :technical_data_es, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 min-h-[150px] bg-white transition-colors prose max-w-none", placeholder: "Datos técnicos..." %>
+        </div>
+      </div>
     </div>
 
     <div class="col-span-2">

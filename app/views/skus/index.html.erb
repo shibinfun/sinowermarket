@@ -2,7 +2,7 @@
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
     <h1 class="text-3xl font-bold text-slate-900">
       <% if @category %>
-        <%= @category.name %>
+        <%= @category.display_name %>
       <% elsif params[:query].present? %>
         <%= t('.search_results', query: params[:query]) %>
       <% else %>
@@ -80,11 +80,11 @@
             <%= link_to sku_path(sku), class: "block group/title" do %>
               <div class="flex items-center space-x-2 mb-1.5">
                 <span class="px-1.5 py-0.5 bg-blue-50 text-blue-600 text-[9px] font-bold uppercase tracking-wider rounded">
-                  <%= sku.category.name %>
+                  <%= sku.category.display_name %>
                 </span>
               </div>
               <h3 class="text-base font-bold text-slate-800 group-hover/title:text-blue-600 transition-colors duration-200 line-clamp-2 leading-tight mb-1.5">
-                <%= sku.name %>
+                <%= sku.display_name %>
               </h3>
             <% end %>
 

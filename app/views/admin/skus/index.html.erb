@@ -63,6 +63,10 @@
                     <%= display_variant(sku.ordered_images.first, { resize_to_limit: [48, 48] }, class: "h-12 w-12 rounded-lg object-cover border border-slate-100 shadow-sm mr-3") %>
                     <div>
                       <p class="text-sm font-semibold text-slate-900 sku-name"><%= sku.name %></p>
+                      <div class="flex gap-2 mt-0.5">
+                        <span class="text-[10px] text-slate-400 bg-slate-100 px-1 rounded">FR: <%= sku.name_fr %></span>
+                        <span class="text-[10px] text-slate-400 bg-slate-100 px-1 rounded">ES: <%= sku.name_es %></span>
+                      </div>
                     </div>
                   </div>
                 </td>

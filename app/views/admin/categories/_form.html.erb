@@ -20,9 +20,19 @@
   <% end %>
 
   <div class="space-y-5">
-    <div>
-      <%= f.label :name, "Category Name", class: "block text-sm font-semibold text-slate-700 mb-2" %>
-      <%= f.text_field :name, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Enter category name" %>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <%= f.label :name, "English Name", class: "block text-sm font-semibold text-slate-700 mb-2" %>
+        <%= f.text_field :name, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "English" %>
+      </div>
+      <div>
+        <%= f.label :name_fr, "French Name", class: "block text-sm font-semibold text-slate-700 mb-2" %>
+        <%= f.text_field :name_fr, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "French" %>
+      </div>
+      <div>
+        <%= f.label :name_es, "Spanish Name", class: "block text-sm font-semibold text-slate-700 mb-2" %>
+        <%= f.text_field :name_es, class: "block w-full rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm transition-colors", placeholder: "Spanish" %>
+      </div>
     </div>
 
     <div>

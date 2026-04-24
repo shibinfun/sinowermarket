@@ -7,7 +7,18 @@ class Category < ApplicationRecord
   scope :roots, -> { where(parent_id: nil) }
   scope :ordered, -> { order(:position, :id) }
 
-  validates :name, presence: true
+  validates :name, :name_fr, :name_es, presence: true
+  
+  def display_name
+    case I18n.locale
+    when :fr
+      name_fr.presence || name
+    when :es
+      name_es.presence || name
+    else
+      name
+    end
+  end
 
   def root?
     parent_id.nil?
