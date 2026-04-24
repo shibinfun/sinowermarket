@@ -48,6 +48,12 @@ gem "devise"
 # Pagination gem [https://github.com/kaminari/kaminari]
 gem "kaminari"
 
+# Rate limiting and brute-force protection [https://github.com/rack-attack/rack-attack]
+gem "rack-attack"
+
+# Password strength validation [https://github.com/envato/zxcvbn-ruby]
+gem "zxcvbn-ruby"
+
 # Tailwind CSS for Rails [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-rails"
 
