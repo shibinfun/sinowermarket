@@ -9,6 +9,12 @@ class HomeController < ApplicationController
   def contact
   end
 
+  def terms
+  end
+
+  def privacy
+  end
+
   def change_locale
     locale = params[:locale].to_sym
     if I18n.available_locales.include?(locale)

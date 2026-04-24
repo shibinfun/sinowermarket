@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_one :cart, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :addresses, dependent: :destroy
+  
+  attr_accessor :terms_of_service
+  validates :terms_of_service, acceptance: { allow_nil: false, on: :create }
 
   validate :password_complexity
 

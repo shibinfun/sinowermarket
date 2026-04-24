@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
+  before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :set_currency
   before_action :set_navbar_categories
@@ -55,5 +56,11 @@ class ApplicationController < ActionController::Base
   def set_currency
     @currency = params[:currency] || session[:currency] || "USD"
     session[:currency] = @currency
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:terms_of_service])
   end
 end

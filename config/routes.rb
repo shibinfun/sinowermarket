@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get "home/index"
   get "help-center", to: "home#help_center", as: :help_center
   get "contact", to: "home#contact", as: :contact
+  get "terms", to: "home#terms", as: :terms
+  get "privacy", to: "home#privacy", as: :privacy
   get "change_locale/:locale", to: "home#change_locale", as: :change_locale
   get "change_currency/:currency", to: "home#change_currency", as: :change_currency
   devise_for :users

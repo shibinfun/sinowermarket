@@ -57,7 +57,22 @@ class UserTest < ActiveSupport::TestCase
 
     # Strong password
     user.password = "Tr0ub4dor&3!"
-    user.valid?
+    user.terms_of_service = "1"
+    assert user.valid?, user.errors.full_messages.join(", ")
     assert_empty user.errors[:password]
+  end
+
+  test "should require terms of service acceptance" do
+    user = User.new(
+      email: "terms_unique_email@example.com",
+      password: "CorrectHorseBatteryStaple123!@#",
+      password_confirmation: "CorrectHorseBatteryStaple123!@#"
+    )
+    
+    assert_not user.valid?
+    assert_includes user.errors[:terms_of_service], "must be accepted"
+    
+    user.terms_of_service = "1"
+    assert user.valid?, user.errors.full_messages.join(", ")
   end
 end
