@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :order_items, dependent: :destroy
 
-  validates :name, :address, :phone, presence: true
+  validates :name, :province, :city, :detail_address, :phone, presence: true
   validates :total_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :status, inclusion: { in: %w[pending paid shipped delivered cancelled] }
 

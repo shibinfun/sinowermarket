@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_21_104321) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_24_052750) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -112,6 +112,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_21_104321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "currency", default: "USD"
+    t.string "province"
+    t.string "city"
+    t.string "district"
+    t.string "detail_address"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -138,9 +142,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_21_104321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false, null: false
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
     t.index ["admin"], name: "index_users_on_admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   create_table "visitors", force: :cascade do |t|

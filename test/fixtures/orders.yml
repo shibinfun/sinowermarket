@@ -1,7 +1,10 @@
 one:
   user: user
   name: "John Doe"
-  address: "123 Main St"
+  province: "California"
+  city: "Los Angeles"
+  district: "LA"
+  detail_address: "123 Main St"
   phone: "555-1234"
   total_price: 100.0
   status: "paid"
@@ -9,7 +12,10 @@ one:
 two:
   user: admin
   name: "Jane Smith"
-  address: "456 Oak Ave"
+  province: "New York"
+  city: "New York"
+  district: "Manhattan"
+  detail_address: "456 Oak Ave"
   phone: "555-5678"
   total_price: 50.0
   status: "pending"

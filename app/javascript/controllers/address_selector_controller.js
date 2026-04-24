@@ -5,18 +5,27 @@ export default class extends Controller {
     const button = event.currentTarget
     const name = button.dataset.name
     const phone = button.dataset.phone
-    const address = button.dataset.fullAddress
+    const province = button.dataset.province
+    const city = button.dataset.city
+    const district = button.dataset.district
+    const detailAddress = button.dataset.detailAddress
 
     // Find the form with order-form controller
     const form = document.querySelector('[data-controller="order-form"]')
     if (form) {
       const nameInput = form.querySelector('[data-order-form-target="name"]')
       const phoneInput = form.querySelector('[data-order-form-target="phone"]')
-      const addressInput = form.querySelector('[data-order-form-target="address"]')
+      const provinceInput = form.querySelector('[data-order-form-target="province"]')
+      const cityInput = form.querySelector('[data-order-form-target="city"]')
+      const districtInput = form.querySelector('[data-order-form-target="district"]')
+      const detailAddressInput = form.querySelector('[data-order-form-target="detailAddress"]')
 
       if (nameInput) nameInput.value = name
       if (phoneInput) phoneInput.value = phone
-      if (addressInput) addressInput.value = address
+      if (provinceInput) provinceInput.value = province
+      if (cityInput) cityInput.value = city
+      if (districtInput) districtInput.value = district
+      if (detailAddressInput) detailAddressInput.value = detailAddress
 
       // Visual feedback
       this.highlightSelected(button)

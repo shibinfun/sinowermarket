@@ -16,7 +16,8 @@
       <h2 class="text-xl font-semibold mb-4 border-b pb-2">Shipping Details</h2>
       <p><strong>Name:</strong> <%= @order.name %></p>
       <p><strong>Phone:</strong> <%= @order.phone %></p>
-      <p><strong>Address:</strong> <%= @order.address %></p>
+      <p><strong>Address:</strong> <%= @order.province %> <%= @order.city %> <%= @order.district %></p>
+      <p class="ml-16"><%= @order.detail_address %></p>
     </div>
 
     <div class="bg-white shadow rounded-lg p-6">

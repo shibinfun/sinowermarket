@@ -25,7 +25,10 @@
                         data-action="click->address-selector#select"
                         data-name="<%= address.name %>"
                         data-phone="<%= address.phone %>"
-                        data-full-address="<%= address.full_address %>"
+                        data-province="<%= address.province %>"
+                        data-city="<%= address.city %>"
+                        data-district="<%= address.district %>"
+                        data-detail-address="<%= address.detail_address %>"
                         class="text-left p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:bg-blue-50/30 transition-all group relative">
                   <p class="font-bold text-sm text-gray-900 mb-1"><%= address.name %></p>
                   <p class="text-xs text-gray-500 mb-2"><%= address.phone %></p>
@@ -86,15 +89,32 @@
             </div>
           </div>
 
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="group">
+              <%= f.label :province, "Province", class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors" %>
+              <%= f.text_field :province, placeholder: "Province", data: { order_form_target: "province" }, class: "block w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 outline-none text-gray-700 placeholder-gray-400" %>
+            </div>
+
+            <div class="group">
+              <%= f.label :city, "City", class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors" %>
+              <%= f.text_field :city, placeholder: "City", data: { order_form_target: "city" }, class: "block w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 outline-none text-gray-700 placeholder-gray-400" %>
+            </div>
+
+            <div class="group">
+              <%= f.label :district, "District", class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors" %>
+              <%= f.text_field :district, placeholder: "District (Optional)", data: { order_form_target: "district" }, class: "block w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 outline-none text-gray-700 placeholder-gray-400" %>
+            </div>
+          </div>
+
           <div class="group">
-            <%= f.label :address, "Shipping Address", class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors" %>
+            <%= f.label :detail_address, "Detail Address", class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors" %>
             <div class="relative">
               <div class="absolute top-4 left-4 flex items-start pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400 group-focus-within:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
               </div>
-              <%= f.text_area :address, rows: 4, placeholder: "Street address, City, State, Postal code", data: { order_form_target: "address" }, class: "pl-11 block w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 outline-none text-gray-700 placeholder-gray-400" %>
+              <%= f.text_area :detail_address, rows: 3, placeholder: "Street address, Building, Apartment, etc.", data: { order_form_target: "detailAddress" }, class: "pl-11 block w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 outline-none text-gray-700 placeholder-gray-400" %>
             </div>
           </div>
 

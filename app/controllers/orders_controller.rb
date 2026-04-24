@@ -18,6 +18,10 @@ class OrdersController < ApplicationController
     if default_address = current_user.addresses.find_by(is_default: true)
       @order.name = default_address.name
       @order.phone = default_address.phone
+      @order.province = default_address.province
+      @order.city = default_address.city
+      @order.district = default_address.district
+      @order.detail_address = default_address.detail_address
       @order.address = default_address.full_address
     end
 
@@ -67,7 +71,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:name, :address, :phone)
+    params.require(:order).permit(:name, :phone, :province, :city, :district, :detail_address)
   end
 
   def ensure_cart_not_empty

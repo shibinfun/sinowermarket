@@ -7,7 +7,11 @@ module Account
     end
 
     def new
-      @address = current_user.addresses.build
+      if current_user.addresses.count >= 3
+        redirect_to account_addresses_path, alert: "You can only have up to 3 addresses."
+      else
+        @address = current_user.addresses.build
+      end
     end
 
     def edit
