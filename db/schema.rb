@@ -150,7 +150,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_28_011205) do
     t.text "intro_es"
     t.integer "kind", default: 0
     t.index ["category_id"], name: "index_skus_on_category_id"
-    t.index ["kind"], name: "index_skus_on_kind"
   end
 
   create_table "users", force: :cascade do |t|
