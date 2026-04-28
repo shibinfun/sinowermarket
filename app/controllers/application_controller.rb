@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :set_currency
   before_action :set_navbar_categories
   before_action :track_visitor
+  before_action :merge_cart
   helper_method :current_cart
 
   def current_cart
@@ -24,6 +25,28 @@ class ApplicationController < ActionController::Base
     @current_cart
   end
 
+  def merge_cart
+    return unless user_signed_in? && session[:cart_id]
+    
+    guest_cart = Cart.find_by(id: session[:cart_id])
+    if guest_cart && guest_cart.user.nil?
+      user_cart = current_user.cart || current_user.create_cart
+      
+      guest_cart.cart_items.each do |guest_item|
+        user_item = user_cart.cart_items.find_or_initialize_by(sku_id: guest_item.sku_id)
+        if user_item.persisted?
+          user_item.quantity += guest_item.quantity
+        else
+          user_item.quantity = guest_item.quantity
+        end
+        user_item.save
+      end
+      
+      guest_cart.destroy
+      session.delete(:cart_id)
+    end
+  end
+
   private
 
   def track_visitor
@@ -32,7 +55,7 @@ class ApplicationController < ActionController::Base
     
     # 记录访问
     Visitor.create(
-      ip: request.remote_ip,
+      ip: anonymize_ip(request.remote_ip),
       path: request.fullpath,
       user_agent: request.user_agent,
       location: "Local/Unknown" # 暂时填入未知，后续可以考虑集成地理位置API
@@ -56,6 +79,17 @@ class ApplicationController < ActionController::Base
   def set_currency
     @currency = params[:currency] || session[:currency] || "USD"
     session[:currency] = @currency
+  end
+
+  def anonymize_ip(ip)
+    return ip if ip.blank?
+    if ip.include?('.') # IPv4
+      ip.split('.')[0..2].join('.') + '.0'
+    elsif ip.include?(':') # IPv6
+      ip.split(':')[0..2].join(':') + '::0'
+    else
+      ip
+    end
   end
 
   protected

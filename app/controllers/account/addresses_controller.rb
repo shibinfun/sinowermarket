@@ -18,12 +18,16 @@ module Account
     end
 
     def create
-      @address = current_user.addresses.build(address_params)
-
-      if @address.save
-        redirect_to account_addresses_path, notice: "Address was successfully created."
+      if current_user.addresses.count >= 3
+        redirect_to account_addresses_path, alert: "You can only have up to 3 addresses."
       else
-        render :new, status: :unprocessable_entity
+        @address = current_user.addresses.build(address_params)
+
+        if @address.save
+          redirect_to account_addresses_path, notice: "Address was successfully created."
+        else
+          render :new, status: :unprocessable_entity
+        end
       end
     end
 

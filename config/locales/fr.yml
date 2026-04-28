@@ -230,6 +230,7 @@ fr:
       advantage_4: "Plus de 20 ans d'expérience"
       missing_info: "Informations manquantes ?"
       contact_us_directly: "Contactez-nous directement ici"
+      recommended_accessories: "Accessoires Recommandés"
   cart:
     show:
       title: "Votre panier"

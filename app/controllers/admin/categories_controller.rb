@@ -35,8 +35,11 @@ module Admin
     end
 
     def destroy
-      @category.destroy
-      redirect_to admin_categories_path, notice: "Category was successfully destroyed.", status: :see_other
+      if @category.destroy
+        redirect_to admin_categories_path, notice: "Category was successfully destroyed.", status: :see_other
+      else
+        redirect_to admin_categories_path, alert: @category.errors.full_messages.to_sentence
+      end
     end
 
     private

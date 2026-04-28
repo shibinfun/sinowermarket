@@ -44,15 +44,28 @@
       <% end %>
 
       <!-- Products Card -->
-      <%= link_to admin_skus_path, class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{controller_name == 'skus' ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 hover:border-slate-200'}" do %>
-        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 <%= controller_name == 'skus' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
+      <%= link_to admin_skus_path, class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{(controller_name == 'skus' && params[:kind] != 'accessory') ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 hover:border-slate-200'}" do %>
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 #{(controller_name == 'skus' && params[:kind] != 'accessory') ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
           </svg>
         </div>
         <div class="min-w-0">
-          <p class="text-sm font-semibold <%= controller_name == 'skus' ? 'text-blue-700' : 'text-slate-700 group-hover:text-blue-700' %> transition-colors duration-200">Products</p>
+          <p class="text-sm font-semibold #{(controller_name == 'skus' && params[:kind] != 'accessory') ? 'text-blue-700' : 'text-slate-700 group-hover:text-blue-700' %> transition-colors duration-200">Products</p>
           <p class="text-[11px] text-slate-400">Inventory & SKUs</p>
+        </div>
+      <% end %>
+
+      <!-- Accessories Card -->
+      <%= link_to admin_skus_path(kind: 'accessory'), class: "flex items-center gap-3 p-3 rounded-xl mb-2 transition-all duration-200 group #{(controller_name == 'skus' && params[:kind] == 'accessory') ? 'bg-blue-50 border border-blue-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 hover:border-slate-200'}" do %>
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 #{(controller_name == 'skus' && params[:kind] == 'accessory') ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600' %> transition-all duration-200">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.423 3.623L16.423 20.377M15.75 9l-3 3 3 3M8.25 9l3 3-3 3" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-semibold #{(controller_name == 'skus' && params[:kind] == 'accessory') ? 'text-blue-700' : 'text-slate-700 group-hover:text-blue-700' %> transition-colors duration-200">Accessories</p>
+          <p class="text-[11px] text-slate-400">Manage Accessories</p>
         </div>
       <% end %>
 

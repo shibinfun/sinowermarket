@@ -39,7 +39,7 @@
                   <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-[9px] text-white font-bold shadow-sm">1</span>
                 </div>
                 <div class="ml-4">
-                  <p class="text-base font-bold text-slate-900"><%= category.name %></p>
+                  <p class="text-base font-bold text-slate-900"><span class="text-slate-400 font-mono text-sm mr-1">#<%= category.id %></span><%= category.name %></p>
                   <div class="flex items-center space-x-2 mt-1">
                     <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">FR: <%= category.name_fr %></span>
                     <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">ES: <%= category.name_es %></span>
@@ -80,7 +80,7 @@
                         <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-[8px] text-white font-bold shadow-sm">2</span>
                       </div>
                       <div class="ml-3">
-                        <p class="text-sm font-semibold text-slate-800"><%= child.name %></p>
+                        <p class="text-sm font-semibold text-slate-800"><span class="text-slate-400 font-mono text-xs mr-1">#<%= child.id %></span><%= child.name %></p>
                         <div class="flex items-center space-x-2 mt-0.5">
                           <span class="text-[9px] text-slate-400">FR: <%= child.name_fr %></span>
                           <span class="text-[9px] text-slate-400">ES: <%= child.name_es %></span>

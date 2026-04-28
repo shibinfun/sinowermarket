@@ -18,6 +18,17 @@ class Sku < ApplicationRecord
   validates :name, :name_fr, :name_es, presence: true
   validates :category_id, presence: true
   
+  def display_intro
+    case I18n.locale
+    when :fr
+      intro_fr.presence || intro
+    when :es
+      intro_es.presence || intro
+    else
+      intro
+    end
+  end
+
   def display_name
     case I18n.locale
     when :fr
@@ -68,6 +79,26 @@ class Sku < ApplicationRecord
       original_price_usd
     end
   end
+
+  # 配件关联
+  enum :kind, { standard: 0, accessory: 1, both: 2 }
+  has_many :sku_accessories, dependent: :destroy
+  has_many :accessories, through: :sku_accessories, source: :accessory
+
+  def accessory_ids_string
+    accessory_ids.join(", ")
+  end
+
+  def accessory_ids_string=(value)
+    self.accessory_ids = value.to_s.split(/[,\s]+/).map(&:strip).reject(&:blank?).uniq
+  end
+  
+  # 反向配件关联：当 SKU 被删除时，也删除它作为配件被关联的记录
+  has_many :inverse_sku_accessories, class_name: "SkuAccessory", foreign_key: "accessory_id", dependent: :destroy
+
+  # 购物车和订单项关联
+  has_many :cart_items, dependent: :destroy
+  has_many :order_items, dependent: :restrict_with_error
 
   # 验证是否关联到二级分类（子分类）
   validate :must_be_child_category

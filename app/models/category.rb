@@ -2,7 +2,7 @@ class Category < ApplicationRecord
   has_one_attached :image
   belongs_to :parent, class_name: "Category", optional: true
   has_many :children, class_name: "Category", foreign_key: "parent_id", dependent: :destroy
-  has_many :skus, dependent: :destroy
+  has_many :skus, dependent: :restrict_with_error
 
   scope :roots, -> { where(parent_id: nil) }
   scope :ordered, -> { order(:position, :id) }

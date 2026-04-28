@@ -4,6 +4,9 @@ module Admin
 
     def index
       @skus = Sku.all.includes(:category, images_attachments: :blob).order(created_at: :desc)
+      if params[:kind].present?
+        @skus = @skus.where(kind: params[:kind])
+      end
       if params[:category_id].present?
         category = Category.find(params[:category_id])
         if category.parent_id.nil?
@@ -60,8 +63,11 @@ module Admin
     end
 
     def destroy
-      @sku.destroy
-      redirect_to admin_skus_path, notice: "Sku was successfully destroyed.", status: :see_other
+      if @sku.destroy
+        redirect_to admin_skus_path, notice: "Sku was successfully destroyed.", status: :see_other
+      else
+        redirect_to admin_skus_path, alert: @sku.errors.full_messages.to_sentence
+      end
     end
 
     def delete_image
@@ -78,11 +84,12 @@ module Admin
       def sku_params
         params.require(:sku).permit(
           :name, :name_fr, :name_es, 
-          :original_price_usd, :current_price_usd, 
+          :intro, :intro_fr, :intro_es,
+          :original_price_usd, :current_price_usd,
           :original_price_cad, :current_price_cad, 
           :description, :description_fr, :description_es,
           :technical_data, :technical_data_fr, :technical_data_es,
-          :category_id, :specsheet, images: []
+          :category_id, :specsheet, :kind, :accessory_ids_string, images: []
         ).tap do |p|
           if p[:images].present?
             p[:images] = p[:images].reject(&:blank?)

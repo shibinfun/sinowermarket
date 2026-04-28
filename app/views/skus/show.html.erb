@@ -105,6 +105,12 @@
             <span class="text-2xl font-bold text-slate-700"><%= t('.contact_for_pricing') %></span>
           <% end %>
         </div>
+
+        <% if @sku.display_intro.present? %>
+          <div class="mt-6 text-lg text-slate-600 italic">
+            <%= simple_format(@sku.display_intro) %>
+          </div>
+        <% end %>
       </div>
 
       <div class="py-8 space-y-8">
@@ -269,4 +275,37 @@
       </div>
     </div>
   </div>
+
+  <% if @sku.accessories.any? %>
+    <section class="mt-16 pt-12 border-t border-slate-100">
+      <h3 class="text-2xl font-bold text-slate-900 mb-8"><%= t('.recommended_accessories') %></h3>
+      
+      <!-- 横向滚动容器 -->
+      <div class="flex overflow-x-auto pb-6 space-x-6 snap-x snap-mandatory scrollbar-hide">
+        <% @sku.accessories.each do |accessory| %>
+          <div class="flex-none w-64 snap-start bg-white rounded-2xl border border-slate-200 p-4 hover:shadow-lg transition-all group">
+            <!-- 点击跳转到自己的详情页 -->
+            <%= link_to sku_path(accessory) do %>
+              <div class="aspect-square rounded-xl overflow-hidden bg-slate-50 mb-4">
+                <%= display_variant(accessory.images.first, { resize_to_limit: [300, 300] }, { class: "w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" }) if accessory.images.attached? %>
+              </div>
+              <h4 class="font-bold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1 text-sm"><%= accessory.display_name %></h4>
+            <% end %>
+            
+            <div class="mt-4 flex items-center justify-between">
+              <span class="text-blue-600 font-black"><%= number_to_currency(accessory.price_in(@currency)) %></span>
+              
+              <!-- 加入购物车按钮 -->
+              <%= button_to cart_items_path(sku_id: accessory.id, quantity: 1), 
+                  class: "p-2 bg-slate-900 text-white rounded-lg hover:bg-slate-700 active:scale-95 transition-all" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
 </div>

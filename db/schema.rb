@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_24_103619) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_28_011205) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -121,6 +121,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_24_103619) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "sku_accessories", force: :cascade do |t|
+    t.integer "sku_id", null: false
+    t.integer "accessory_id", null: false
+    t.integer "position", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["accessory_id"], name: "index_sku_accessories_on_accessory_id"
+    t.index ["sku_id", "accessory_id"], name: "index_sku_accessories_on_sku_id_and_accessory_id", unique: true
+    t.index ["sku_id"], name: "index_sku_accessories_on_sku_id"
+  end
+
   create_table "skus", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -134,7 +145,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_24_103619) do
     t.decimal "current_price_cad", precision: 10, scale: 2
     t.string "name_fr"
     t.string "name_es"
+    t.text "intro"
+    t.text "intro_fr"
+    t.text "intro_es"
+    t.integer "kind", default: 0
     t.index ["category_id"], name: "index_skus_on_category_id"
+    t.index ["kind"], name: "index_skus_on_kind"
   end
 
   create_table "users", force: :cascade do |t|
@@ -178,5 +194,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_24_103619) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "skus"
   add_foreign_key "orders", "users"
+  add_foreign_key "sku_accessories", "skus"
+  add_foreign_key "sku_accessories", "skus", column: "accessory_id"
   add_foreign_key "skus", "categories"
 end

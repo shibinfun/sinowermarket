@@ -49,6 +49,7 @@
         <table class="min-w-full divide-y divide-slate-200">
           <thead class="bg-gradient-to-r from-slate-50 to-slate-50/50">
             <tr>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider w-20">ID</th>
               <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Product</th>
               <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Category</th>
               <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Price</th>
@@ -58,6 +59,9 @@
           <tbody class="divide-y divide-slate-100">
             <% @skus.each do |sku| %>
               <tr class="hover:bg-slate-50/70 transition-colors duration-150 group">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="text-sm font-mono text-slate-500 bg-slate-100 px-2 py-1 rounded">#<%= sku.id %></span>
+                </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <%= display_variant(sku.ordered_images.first, { resize_to_limit: [48, 48] }, class: "h-12 w-12 rounded-lg object-cover border border-slate-100 shadow-sm mr-3") %>
