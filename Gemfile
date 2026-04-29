@@ -44,6 +44,8 @@ gem "google-cloud-storage", "~> 1.45"
 
 # Authentication solution [https://github.com/heartcombo/devise]
 gem "devise"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
 
 # Pagination gem [https://github.com/kaminari/kaminari]
 gem "kaminari"

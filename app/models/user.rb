@@ -4,7 +4,17 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :trackable, :lockable, :timeoutable
+         :trackable, :lockable, :timeoutable, :omniauthable, omniauth_providers: [:google_oauth2]
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.terms_of_service = '1'
+      # 如果需要保存姓名：
+      # user.full_name = auth.info.name
+    end
+  end
 
   has_one :cart, dependent: :destroy
   has_many :orders, dependent: :destroy

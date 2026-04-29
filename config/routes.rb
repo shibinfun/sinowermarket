@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "privacy", to: "home#privacy", as: :privacy
   get "change_locale/:locale", to: "home#change_locale", as: :change_locale
   get "change_currency/:currency", to: "home#change_currency", as: :change_currency
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   root "skus#index"
   
   resources :categories, only: [:show]
