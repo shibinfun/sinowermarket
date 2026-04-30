@@ -12,6 +12,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    redirect_to root_path, alert: "登录失败，请重试。"
+    redirect_to root_path, alert: t('alerts.omniauth.failed')
   end
 end

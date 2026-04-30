@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
     if @order.save
       current_cart.destroy
       session[:cart_id] = nil
-      redirect_to @order, notice: "Order was successfully created."
+      redirect_to @order, notice: t('notices.orders.created')
     else
       @addresses = current_user.addresses.ordered
       render :new, status: :unprocessable_entity
@@ -46,12 +46,12 @@ class OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
     if @order.pending?
       if @order.update(status: "paid")
-        redirect_to @order, notice: "Order paid successfully!"
+        redirect_to @order, notice: t('notices.orders.paid')
       else
-        redirect_to @order, alert: "Payment failed."
+        redirect_to @order, alert: t('alerts.orders.payment_failed')
       end
     else
-      redirect_to @order, alert: "This order cannot be paid."
+      redirect_to @order, alert: t('alerts.orders.cannot_pay')
     end
   end
 
@@ -59,12 +59,12 @@ class OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
     if @order.can_cancel?
       if @order.cancel!
-        redirect_to @order, notice: "Order has been cancelled."
+        redirect_to @order, notice: t('notices.orders.cancelled')
       else
-        redirect_to @order, alert: "Failed to cancel the order."
+        redirect_to @order, alert: t('alerts.orders.cancel_failed')
       end
     else
-      redirect_to @order, alert: "This order cannot be cancelled."
+      redirect_to @order, alert: t('alerts.orders.cannot_cancel')
     end
   end
 
@@ -76,7 +76,7 @@ class OrdersController < ApplicationController
 
   def ensure_cart_not_empty
     if current_cart.cart_items.empty?
-      redirect_to cart_path, alert: "Your cart is empty."
+      redirect_to cart_path, alert: t('alerts.orders.cart_empty')
     end
   end
 end

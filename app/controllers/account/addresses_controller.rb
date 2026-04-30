@@ -8,7 +8,7 @@ module Account
 
     def new
       if current_user.addresses.count >= 3
-        redirect_to account_addresses_path, alert: "You can only have up to 3 addresses."
+        redirect_to account_addresses_path, alert: t('alerts.addresses.max_reached')
       else
         @address = current_user.addresses.build
       end
@@ -19,12 +19,12 @@ module Account
 
     def create
       if current_user.addresses.count >= 3
-        redirect_to account_addresses_path, alert: "You can only have up to 3 addresses."
+        redirect_to account_addresses_path, alert: t('alerts.addresses.max_reached')
       else
         @address = current_user.addresses.build(address_params)
 
         if @address.save
-          redirect_to account_addresses_path, notice: "Address was successfully created."
+          redirect_to account_addresses_path, notice: t('notices.addresses.created')
         else
           render :new, status: :unprocessable_entity
         end
@@ -33,7 +33,7 @@ module Account
 
     def update
       if @address.update(address_params)
-        redirect_to account_addresses_path, notice: "Address was successfully updated."
+        redirect_to account_addresses_path, notice: t('notices.addresses.updated')
       else
         render :edit, status: :unprocessable_entity
       end
@@ -41,12 +41,12 @@ module Account
 
     def destroy
       @address.destroy
-      redirect_to account_addresses_path, notice: "Address was successfully deleted.", status: :see_other
+      redirect_to account_addresses_path, notice: t('notices.addresses.destroyed'), status: :see_other
     end
 
     def set_default
       @address.update(is_default: true)
-      redirect_to account_addresses_path, notice: "Default address updated."
+      redirect_to account_addresses_path, notice: t('notices.addresses.default_updated')
     end
 
     private

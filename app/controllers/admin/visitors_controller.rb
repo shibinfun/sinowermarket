@@ -8,11 +8,11 @@ class Admin::VisitorsController < ApplicationController
 
   def destroy_all
     Visitor.delete_all
-    redirect_to admin_visitors_path, notice: "All visitor data has been cleared."
+    redirect_to admin_visitors_path, notice: t('notices.visitors.cleared_all')
   end
 
   def clean_old
     Visitor.where('created_at < ?', 7.days.ago).delete_all
-    redirect_to admin_visitors_path, notice: "Data older than 7 days has been cleared."
+    redirect_to admin_visitors_path, notice: t('notices.visitors.cleared_old')
   end
 end

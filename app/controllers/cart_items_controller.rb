@@ -5,25 +5,25 @@ class CartItemsController < ApplicationController
     @cart_item.quantity = (@cart_item.quantity || 0) + (params[:quantity] || 1).to_i
 
     if @cart_item.save
-      redirect_back fallback_location: skus_path, notice: "Added #{@sku.name} to cart."
+      redirect_back fallback_location: skus_path, notice: t('notices.cart.added', name: @sku.name)
     else
-      redirect_back fallback_location: skus_path, alert: "Could not add item to cart."
+      redirect_back fallback_location: skus_path, alert: t('alerts.cart.add_failed')
     end
   end
 
   def update
     @cart_item = current_cart.cart_items.find(params[:id])
     if @cart_item.update(cart_item_params)
-      redirect_to cart_path, notice: "Cart updated."
+      redirect_to cart_path, notice: t('notices.cart.updated')
     else
-      redirect_to cart_path, alert: "Could not update cart."
+      redirect_to cart_path, alert: t('alerts.cart.update_failed')
     end
   end
 
   def destroy
     @cart_item = current_cart.cart_items.find(params[:id])
     @cart_item.destroy
-    redirect_to cart_path, notice: "Item removed from cart."
+    redirect_to cart_path, notice: t('notices.cart.item_removed')
   end
 
   private

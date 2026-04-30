@@ -34,7 +34,7 @@ module Admin
       @sku = Sku.new(sku_params)
 
       if @sku.save
-        redirect_to admin_skus_path, notice: "Sku was successfully created."
+        redirect_to admin_skus_path, notice: t('notices.skus.created')
       else
         render :new, status: :unprocessable_entity
       end
@@ -56,7 +56,7 @@ module Admin
           end
         end
 
-        redirect_to admin_skus_path, notice: "Sku was successfully updated."
+        redirect_to admin_skus_path, notice: t('notices.skus.updated')
       else
         render :edit, status: :unprocessable_entity
       end
@@ -64,7 +64,7 @@ module Admin
 
     def destroy
       if @sku.destroy
-        redirect_to admin_skus_path, notice: "Sku was successfully destroyed.", status: :see_other
+        redirect_to admin_skus_path, notice: t('notices.skus.destroyed'), status: :see_other
       else
         redirect_to admin_skus_path, alert: @sku.errors.full_messages.to_sentence
       end
@@ -73,7 +73,7 @@ module Admin
     def delete_image
       image = @sku.images.find(params[:image_id])
       image.purge
-      redirect_to edit_admin_sku_path(@sku), notice: "Image was successfully deleted."
+      redirect_to edit_admin_sku_path(@sku), notice: t('notices.skus.image_deleted')
     end
 
     private

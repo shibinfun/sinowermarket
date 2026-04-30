@@ -109,7 +109,7 @@ en:
         are_you_sure: "Are you sure?"
     confirmations:
       new:
-        title: "Resend instructions"
+        title: "Resend confirmation instructions"
         subtitle: "Receive confirmation link via email"
         email: "Email address"
         submit: "Resend instructions"
@@ -135,6 +135,12 @@ en:
         forgot_password: "Forgot password?"
         submit: "Sign in"
         no_account: "Don't have an account?"
+    unlocks:
+      new:
+        title: "Unlock account"
+        subtitle: "Resend unlock instructions to your email"
+        email: "Email address"
+        submit: "Resend unlock instructions"
   account:
     sidebar:
       title: "My Account"
@@ -211,12 +217,6 @@ en:
         is_default: "Set as default address"
         submit: "Save Address"
         cancel: "Cancel"
-    unlocks:
-      new:
-        title: "Unlock account"
-        subtitle: "Resend unlock instructions to your email"
-        email: "Email address"
-        submit: "Resend unlock instructions"
   skus:
     index:
       search_results: "Search Results for \"%{query}\""
@@ -322,6 +322,56 @@ en:
       quantity: "Quantity"
       subtotal: "Subtotal"
       back_to_orders: "Back to My Orders"
+  notices:
+    orders:
+      created: "Order was successfully created."
+      paid: "Order paid successfully!"
+      cancelled: "Order has been cancelled."
+      shipped: "Order marked as shipped."
+      completed: "Order marked as completed."
+    categories:
+      created: "Category was successfully created."
+      updated: "Category was successfully updated."
+      destroyed: "Category was successfully destroyed."
+    skus:
+      created: "Sku was successfully created."
+      updated: "Sku was successfully updated."
+      destroyed: "Sku was successfully destroyed."
+      image_deleted: "Image was successfully deleted."
+    visitors:
+      cleared_all: "All visitor data has been cleared."
+      cleared_old: "Data older than 7 days has been cleared."
+    addresses:
+      created: "Address was successfully created."
+      updated: "Address was successfully updated."
+      destroyed: "Address was successfully deleted."
+      default_updated: "Default address updated."
+    cart:
+      added: "Added %{name} to cart."
+      updated: "Cart updated."
+      item_removed: "Item removed from cart."
+  alerts:
+    orders:
+      payment_failed: "Payment failed."
+      cannot_pay: "This order cannot be paid."
+      cancel_failed: "Failed to cancel the order."
+      cannot_cancel: "This order cannot be cancelled."
+      cart_empty: "Your cart is empty."
+      cannot_ship: "Cannot ship this order."
+      cannot_complete: "Cannot complete this order."
+    admin:
+      access_denied: "Access denied. Admin privileges required."
+    categories:
+      save_failed: "Failed to save category."
+    skus:
+      save_failed: "Failed to save SKU."
+    addresses:
+      max_reached: "You can only have up to 3 addresses."
+    cart:
+      add_failed: "Could not add item to cart."
+      update_failed: "Could not update cart."
+    omniauth:
+      failed: "Authentication failed, please try again."
   helpers:
     submit:
       create: "Create %{model}"

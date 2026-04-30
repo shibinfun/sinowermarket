@@ -80,7 +80,7 @@ fr:
         are_you_sure: "Êtes-vous sûr ?"
     confirmations:
       new:
-        title: "Renvoyer les instructions"
+        title: "Renvoyer les instructions de confirmation"
         subtitle: "Recevoir le lien de confirmation par e-mail"
         email: "Adresse e-mail"
         submit: "Renvoyer les instructions"
@@ -106,6 +106,12 @@ fr:
         forgot_password: "Mot de passe oublié ?"
         submit: "Se connecter"
         no_account: "Vous n'avez pas de compte ?"
+    unlocks:
+      new:
+        title: "Débloquer le compte"
+        subtitle: "Renvoyer les instructions de déblocage par e-mail"
+        email: "Adresse e-mail"
+        submit: "Renvoyer les instructions de déblocage"
   account:
     sidebar:
       title: "Mon compte"
@@ -182,12 +188,6 @@ fr:
         is_default: "Définir comme adresse par défaut"
         submit: "Enregistrer l'adresse"
         cancel: "Annuler"
-    unlocks:
-      new:
-        title: "Débloquer le compte"
-        subtitle: "Renvoyer les instructions de déblocage par e-mail"
-        email: "Adresse e-mail"
-        submit: "Renvoyer les instructions de déblocage"
   skus:
     index:
       search_results: "Résultats de recherche pour \"%{query}\""
@@ -293,6 +293,56 @@ fr:
       quantity: "Quantité"
       subtotal: "Sous-total"
       back_to_orders: "Retour à mes commandes"
+  notices:
+    orders:
+      created: "La commande a été créée avec succès."
+      paid: "Commande payée avec succès !"
+      cancelled: "La commande a été annulée."
+      shipped: "Commande marquée comme expédiée."
+      completed: "Commande marquée comme terminée."
+    categories:
+      created: "La catégorie a été créée avec succès."
+      updated: "La catégorie a été mise à jour avec succès."
+      destroyed: "La catégorie a été supprimée avec succès."
+    skus:
+      created: "Le SKU a été créé avec succès."
+      updated: "Le SKU a été mis à jour avec succès."
+      destroyed: "Le SKU a été supprimé avec succès."
+      image_deleted: "L'image a été supprimée avec succès."
+    visitors:
+      cleared_all: "Toutes les données des visiteurs ont été effacées."
+      cleared_old: "Les données datant de plus de 7 jours ont été effacées."
+    addresses:
+      created: "L'adresse a été créée avec succès."
+      updated: "L'adresse a été mise à jour avec succès."
+      destroyed: "L'adresse a été supprimée avec succès."
+      default_updated: "Adresse par défaut mise à jour."
+    cart:
+      added: "%{name} ajouté au panier."
+      updated: "Panier mis à jour."
+      item_removed: "Article retiré du panier."
+  alerts:
+    orders:
+      payment_failed: "Le paiement a échoué."
+      cannot_pay: "Cette commande ne peut pas être payée."
+      cancel_failed: "Échec de l'annulation de la commande."
+      cannot_cancel: "Cette commande ne peut pas être annulée."
+      cart_empty: "Votre panier est vide."
+      cannot_ship: "Impossible d'expédier cette commande."
+      cannot_complete: "Impossible de terminer cette commande."
+    admin:
+      access_denied: "Accès refusé. Privilèges d'administrateur requis."
+    categories:
+      save_failed: "Échec de l'enregistrement de la catégorie."
+    skus:
+      save_failed: "Échec de l'enregistrement du SKU."
+    addresses:
+      max_reached: "Vous ne pouvez avoir que 3 adresses au maximum."
+    cart:
+      add_failed: "Impossible d'ajouter l'article au panier."
+      update_failed: "Impossible de mettre à jour le panier."
+    omniauth:
+      failed: "L'authentification a échoué, veuillez réessayer."
   helpers:
     submit:
       create: "Créer %{model}"

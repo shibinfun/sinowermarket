@@ -12,18 +12,18 @@ module Admin
     def ship
       if @order.can_ship?
         @order.ship!
-        redirect_to admin_order_path(@order), notice: "Order marked as shipped."
+        redirect_to admin_order_path(@order), notice: t('notices.orders.shipped')
       else
-        redirect_to admin_order_path(@order), alert: "Cannot ship this order."
+        redirect_to admin_order_path(@order), alert: t('alerts.orders.cannot_ship')
       end
     end
 
     def complete
       if @order.can_complete?
         @order.complete!
-        redirect_to admin_order_path(@order), notice: "Order marked as completed."
+        redirect_to admin_order_path(@order), notice: t('notices.orders.completed')
       else
-        redirect_to admin_order_path(@order), alert: "Cannot complete this order."
+        redirect_to admin_order_path(@order), alert: t('alerts.orders.cannot_complete')
       end
     end
 
@@ -31,9 +31,9 @@ module Admin
       # Admin can cancel if not already cancelled or delivered
       if !@order.cancelled? && !@order.delivered?
         @order.update(status: "cancelled")
-        redirect_to admin_order_path(@order), notice: "Order has been cancelled."
+        redirect_to admin_order_path(@order), notice: t('notices.orders.cancelled')
       else
-        redirect_to admin_order_path(@order), alert: "Cannot cancel this order."
+        redirect_to admin_order_path(@order), alert: t('alerts.orders.cannot_cancel')
       end
     end
 

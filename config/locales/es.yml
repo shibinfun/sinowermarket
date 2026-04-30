@@ -80,7 +80,7 @@ es:
         are_you_sure: "¿Estás seguro?"
     confirmations:
       new:
-        title: "Reenviar instrucciones"
+        title: "Reenviar instrucciones de confirmación"
         subtitle: "Recibir el enlace de confirmación por correo electrónico"
         email: "Correo electrónico"
         submit: "Reenviar instrucciones"
@@ -106,6 +106,12 @@ es:
         forgot_password: "¿Olvidaste tu contraseña?"
         submit: "Iniciar sesión"
         no_account: "¿No tienes una cuenta?"
+    unlocks:
+      new:
+        title: "Desbloquear cuenta"
+        subtitle: "Reenviar instrucciones de desbloqueo por correo electrónico"
+        email: "Correo electrónico"
+        submit: "Reenviar instrucciones"
   account:
     sidebar:
       title: "Mi cuenta"
@@ -182,12 +188,6 @@ es:
         is_default: "Establecer como dirección predeterminada"
         submit: "Guardar dirección"
         cancel: "Cancelar"
-    unlocks:
-      new:
-        title: "Desbloquear cuenta"
-        subtitle: "Reenviar instrucciones de desbloqueo por correo electrónico"
-        email: "Correo electrónico"
-        submit: "Reenviar instrucciones"
   skus:
     index:
       search_results: "Resultados de búsqueda para \"%{query}\""
@@ -293,6 +293,56 @@ es:
       quantity: "Cantidad"
       subtotal: "Subtotal"
       back_to_orders: "Volver a mis pedidos"
+  notices:
+    orders:
+      created: "El pedido se creó correctamente."
+      paid: "¡Pedido pagado con éxito!"
+      cancelled: "El pedido ha sido cancelado."
+      shipped: "Pedido marcado como enviado."
+      completed: "Pedido marcado como completado."
+    categories:
+      created: "La categoría se creó correctamente."
+      updated: "La categoría se actualizó correctamente."
+      destroyed: "La categoría se eliminó correctamente."
+    skus:
+      created: "El SKU se creó correctamente."
+      updated: "El SKU se actualizó correctamente."
+      destroyed: "El SKU se eliminó correctamente."
+      image_deleted: "La imagen se eliminó correctamente."
+    visitors:
+      cleared_all: "Se han borrado todos los datos de los visitantes."
+      cleared_old: "Se han borrado los datos con más de 7 días de antigüedad."
+    addresses:
+      created: "La dirección se creó correctamente."
+      updated: "La dirección se actualizó correctamente."
+      destroyed: "La dirección se eliminó correctamente."
+      default_updated: "Dirección predeterminada actualizada."
+    cart:
+      added: "Se añadió %{name} al carrito."
+      updated: "Carrito actualizado."
+      item_removed: "Artículo eliminado del carrito."
+  alerts:
+    orders:
+      payment_failed: "El pago falló."
+      cannot_pay: "Este pedido no se puede pagar."
+      cancel_failed: "Error al cancelar el pedido."
+      cannot_cancel: "Este pedido no se puede cancelar."
+      cart_empty: "Tu carrito está vacío."
+      cannot_ship: "No se puede enviar este pedido."
+      cannot_complete: "No se puede completar este pedido."
+    admin:
+      access_denied: "Acceso denegado. Se requieren privilegios de administrador."
+    categories:
+      save_failed: "Error al guardar la categoría."
+    skus:
+      save_failed: "Error al guardar el SKU."
+    addresses:
+      max_reached: "Solo puedes tener hasta 3 direcciones."
+    cart:
+      add_failed: "No se pudo añadir el artículo al carrito."
+      update_failed: "No se pudo actualizar el carrito."
+    omniauth:
+      failed: "Error de autenticación, por favor inténtalo de nuevo."
   helpers:
     submit:
       create: "Crear %{model}"
